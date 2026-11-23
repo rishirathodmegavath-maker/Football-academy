@@ -350,6 +350,53 @@ function ReviewWorkspace({
       );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [batch?.id, month, missingIds.join(","), w.busy]);
+  // "Approve all": only the reports in this batch that already pass the same checks as a single approval (next step
+  // written and saved, month ended, training records unchanged). The server checks each one again, so a report that
+  // is not ready is left as it is and listed, never approved by force. The reviewer confirms once for the whole set.
+  const [approveAllOpen, setApproveAllOpen] = useState(false);
+  const [approveAllChecked, setApproveAllChecked] = useState(false);
+  const batchReports = batch
+    ? batchPlayers.flatMap((player) => {
+        const item = reportFor(player.id);
+        return item ? [{ player, item }] : [];
+      })
+    : [];
+  const readyToApprove = batchReports.filter(
+    ({ item }) =>
+      item.status !== "Approved" &&
+      reportReviewEligibility(item, {
+        dirty: false,
+        reviewed: true,
+        sourceReview:
+          item.sourcesCurrent === undefined
+            ? undefined
+            : { sourcesCurrent: item.sourcesCurrent, reason: item.staleReason },
+      }).canApprove,
+  );
+  const waitingCount = batchReports.filter(
+    ({ item }) => item.status !== "Approved" && !readyToApprove.some((ready) => ready.item.id === item.id),
+  ).length;
+  const approveAll = async () => {
+    if (!approveAllChecked || !readyToApprove.length || !confirmUnsavedChanges()) return;
+    let approved = 0;
+    for (const { item } of readyToApprove) {
+      const result = await w.action<WorkspaceReport>(
+        "approveReport",
+        item.id,
+        { expectedVersion: item.recordVersion },
+        true,
+      );
+      if (result) approved += 1;
+    }
+    const left = readyToApprove.length - approved;
+    setApproveAllOpen(false);
+    setApproveAllChecked(false);
+    setNotice(
+      `${approved} report${approved === 1 ? "" : "s"} approved.` +
+        (left ? ` ${left} could not be approved; open each one to see why.` : "") +
+        " Sharing with parents is a separate action.",
+    );
+  };
   const selection = (
     <section className="rr-card rr-selection" aria-labelledby="rr-select-title">
       <h2 id="rr-select-title">
@@ -430,6 +477,46 @@ function ReviewWorkspace({
           All {batchPlayers.length} player{batchPlayers.length === 1 ? "" : "s"} in {batch.name} are included. A separate draft is
           created for each automatically; review and approve them one by one from the batch review queue below.
         </p>
+      )}
+      {batch && batchReports.length > 0 && (
+        <div className="rr-approve-all">
+          <button
+            className="button secondary"
+            disabled={w.busy || !readyToApprove.length}
+            aria-expanded={approveAllOpen}
+            onClick={() => setApproveAllOpen((open) => !open)}
+          >
+            <CheckCircle2 size={16} />
+            Approve all ready reports ({readyToApprove.length})
+          </button>
+          {!readyToApprove.length && (
+            <p className="muted" role="note">
+              Nothing is ready yet. A report is ready once its next development step is written and saved, the month has ended
+              and the training records have not changed.
+            </p>
+          )}
+          {approveAllOpen && readyToApprove.length > 0 && (
+            <div role="group" aria-label="Approve all ready reports">
+              <p>
+                {readyToApprove.length} report{readyToApprove.length === 1 ? " is" : "s are"} ready in {batch.name}:{" "}
+                {readyToApprove.map(({ player }) => player.name).join(", ")}.
+                {waitingCount > 0 &&
+                  ` ${waitingCount} other${waitingCount === 1 ? " is" : "s are"} not ready and will be left as they are.`}
+              </p>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={approveAllChecked}
+                  onChange={(event) => setApproveAllChecked(event.target.checked)}
+                />{" "}
+                I reviewed these players, their training evidence and feedback.
+              </label>
+              <button className="button primary" disabled={w.busy || !approveAllChecked} onClick={approveAll}>
+                Approve {readyToApprove.length} report{readyToApprove.length === 1 ? "" : "s"}
+              </button>
+            </div>
+          )}
+        </div>
       )}
       <details
         className="rr-queue"

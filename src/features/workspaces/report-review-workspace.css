@@ -705,3 +705,20 @@
     justify-content: flex-start;
   }
 }
+
+.rr-approve-all {
+  margin-top: 12px;
+  display: grid;
+  gap: 10px;
+  justify-items: start;
+}
+.rr-approve-all [role="group"] {
+  display: grid;
+  gap: 10px;
+  justify-items: start;
+}
+.report-review-workspace .rr-approve-all label {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
