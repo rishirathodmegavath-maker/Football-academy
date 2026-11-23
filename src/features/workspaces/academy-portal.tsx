@@ -153,6 +153,8 @@ function OperationalPortal({
     }
     if (section !== "development") next.delete("weekly");
     if (section !== "settings") next.delete("tab");
+    // A one-time request to open a dialog (from the sidebar's Batches group) is never carried to the next screen.
+    next.delete("open");
     if (section !== "messages") next.delete("sourceReport");
     if (section !== "players" && section !== "training") next.delete("create");
     for (const [key, value] of Object.entries(context))

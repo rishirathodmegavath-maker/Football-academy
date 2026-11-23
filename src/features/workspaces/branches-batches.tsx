@@ -1,5 +1,6 @@
 "use client";
-import { useRef, useState, type CSSProperties, type RefObject } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type RefObject } from "react";
+import { useSearchParams } from "next/navigation";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Plus, X } from "lucide-react";
 import type { FootballSquad } from "@/domain/training";
@@ -43,6 +44,14 @@ export function BranchesAndBatches({ workspace: w }: { workspace: Controller }) 
         .includes(batchQuery.toLowerCase()),
     );
   const noBranch = d.records.branch.length === 0;
+  // The sidebar's Batches group asks for a dialog with `open=branch-<time>` or `open=batch-<time>`; the time makes every press new.
+  const asked = useSearchParams().get("open");
+  useEffect(() => {
+    const kind = asked?.split("-")[0];
+    if (kind === "branch") setBranchDialog(null);
+    else if (kind === "batch" && !noBranch) setBatchDialog(null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [asked]);
   return (
     <section className="as-card" aria-labelledby="branches-batches-title">
       <div className="as-card-heading">

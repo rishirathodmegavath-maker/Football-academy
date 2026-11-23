@@ -1342,3 +1342,46 @@ body:has(.academy-portal) {
     background: #f8fafc;
   }
 }
+
+/* The sidebar's collapsible Batches group (Branches & batches, Create branch, Create batch). */
+.portal-sidebar nav .portal-nav-group .portal-group-chevron {
+  margin-left: auto;
+  transition: transform 0.15s ease;
+}
+.portal-sidebar nav .portal-nav-group[aria-expanded="true"] .portal-group-chevron {
+  transform: rotate(180deg);
+}
+.portal-subnav {
+  display: grid;
+  gap: 2px;
+  padding-left: 16px;
+}
+.portal-subnav[hidden] {
+  display: none;
+}
+.portal-sidebar nav .portal-subnav button,
+.portal-menu-dialog nav .portal-subnav button {
+  min-height: 34px;
+  font-size: 13px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .portal-sidebar nav .portal-nav-group .portal-group-chevron {
+    transition: none;
+  }
+}
+
+/* Summary cards that do something (Players page): the same card, as a button. */
+.portal-stat-button {
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+  transition: box-shadow 0.15s ease;
+}
+.portal-stat-button:hover {
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.12);
+}
+.portal-stat-button.active {
+  box-shadow: inset 0 0 0 2px var(--green);
+}

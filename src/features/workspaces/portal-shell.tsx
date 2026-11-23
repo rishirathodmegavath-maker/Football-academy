@@ -1,5 +1,5 @@
 "use client";
-import { useState, type ReactNode, type CSSProperties } from "react";
+import { Fragment, useState, type ReactNode, type CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import * as Dialog from "@radix-ui/react-dialog";
@@ -12,6 +12,11 @@ import {
   ClipboardList,
   WalletCards,
   Menu,
+  Layers,
+  ChevronDown,
+  GitBranch,
+  Plus,
+  List,
   Settings,
   Search,
   CircleHelp,
@@ -59,6 +64,7 @@ export function PortalShell({
   const [mobileOpen, setMobileOpen] = useState(false),
     [collapsed, setCollapsed] = useState(false),
     [help, setHelp] = useState(false),
+    [batchesOpen, setBatchesOpen] = useState(false),
     [search, setSearch] = useState("");
   const parent = d.membership.role === "PARENT";
   const name = d.viewer?.name ?? d.membership.role.toLowerCase();
@@ -102,12 +108,64 @@ export function PortalShell({
       )}
     </>
   );
+  // A collapsible "Batches" group right after Calendar for those who manage branches and batches. Its entries open the Settings
+  // pane that holds them (and, for the two Create entries, the same dialogs); what a person may save is still decided by the server.
+  const showBatches = !limited && !parent && ["OWNER", "ADMIN"].includes(d.membership.role);
+  const openStructure = (open?: "branch" | "batch") => {
+    setMobileOpen(false);
+    onNavigate("settings", { tab: "sessions", open: open ? `${open}-${Date.now()}` : undefined });
+  };
+  const batchesGroup = (
+    <>
+      <button
+        type="button"
+        data-leave-editor
+        className="portal-nav-group"
+        aria-expanded={batchesOpen && !collapsed}
+        aria-controls="portal-batches-group"
+        title="Batches"
+        onClick={() => {
+          // In the icon-only sidebar there is no room for a list: the first press widens it and opens the group.
+          if (collapsed) setCollapsed(false);
+          setBatchesOpen(collapsed ? true : !batchesOpen);
+        }}
+      >
+        <Layers size={22} />
+        {!collapsed && (
+          <>
+            <span>Batches</span>
+            <ChevronDown size={16} className="portal-group-chevron" />
+          </>
+        )}
+      </button>
+      <div
+        id="portal-batches-group"
+        role="group"
+        aria-label="Batches"
+        className="portal-subnav"
+        hidden={!batchesOpen || collapsed}
+      >
+        <button type="button" data-leave-editor onClick={() => openStructure()}>
+          <List size={16} />
+          <span>Branches &amp; batches</span>
+        </button>
+        <button type="button" data-leave-editor onClick={() => openStructure("branch")}>
+          <GitBranch size={16} />
+          <span>Create branch</span>
+        </button>
+        <button type="button" data-leave-editor onClick={() => openStructure("batch")}>
+          <Plus size={16} />
+          <span>Create batch</span>
+        </button>
+      </div>
+    </>
+  );
   const navigation = (
     <nav aria-label={d.viewer?.playerLogin ? "Player navigation" : parent ? "Parent navigation" : "Academy navigation"}>
       {nav.map(({ key, label }) => {
         const Icon =
           parent && key === "settings" ? Menu : icons[key as keyof typeof icons];
-        return (
+        const item = (
           <button
             key={key}
             data-leave-editor
@@ -133,6 +191,14 @@ export function PortalShell({
             <Icon size={22} />
             {!collapsed && <span>{label}</span>}
           </button>
+        );
+        return key === "calendar" && showBatches ? (
+          <Fragment key={key}>
+            {item}
+            {batchesGroup}
+          </Fragment>
+        ) : (
+          item
         );
       })}
     </nav>

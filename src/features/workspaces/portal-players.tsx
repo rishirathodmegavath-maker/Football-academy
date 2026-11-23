@@ -756,38 +756,94 @@ export function PortalPlayers({
             </select>
           </div>
           <div className="portal-stat-grid">
-            {[
-              {
-                n: d.records.player.length,
-                label: "Total players",
-                Icon: Users,
-              },
-              {
-                n: d.records.squad.length,
-                label: "Batches",
-                Icon: ClipboardList,
-              },
-              {
-                n: new Set(d.records.player.map((p) => p.coachId)).size,
-                label: "Assigned coaches",
-                Icon: UserRound,
-              },
-              {
-                n: d.records.player.filter((p) => p.status === "TRIAL").length,
-                label: "Trial players",
-                Icon: Users,
-              },
-            ].map(({ n, label, Icon }) => (
-              <div className="portal-card portal-stat" key={label}>
-                <span className="portal-round">
-                  <Icon size={23} />
-                </span>
-                <span>
-                  <strong>{n}</strong>
-                  <p>{label}</p>
-                </span>
-              </div>
-            ))}
+            {/* Each card does something: Total players clears every filter, Trial players shows the trial players, and for the
+                owner and admin Batches and Assigned coaches open the screens that manage them. A card with nothing to open
+                stays a plain figure. */}
+            {(
+              [
+                {
+                  n: d.records.player.length,
+                  label: "Total players",
+                  Icon: Users,
+                  hint: "Show every player",
+                  pressed: !search && !batch && !age && !position && !status,
+                  go: () => {
+                    setSearch("");
+                    setBatch("");
+                    setAge("");
+                    setPosition("");
+                    setStatus("");
+                    setPage(1);
+                  },
+                },
+                {
+                  n: d.records.squad.length,
+                  label: "Batches",
+                  Icon: ClipboardList,
+                  hint: "Open branches and batches",
+                  go: admin
+                    ? () => onNavigate("settings", { tab: "sessions" })
+                    : undefined,
+                },
+                {
+                  n: new Set(d.records.player.map((p) => p.coachId)).size,
+                  label: "Assigned coaches",
+                  Icon: UserRound,
+                  hint: "Open the team",
+                  go: admin
+                    ? () => onNavigate("settings", { tab: "team" })
+                    : undefined,
+                },
+                {
+                  n: d.records.player.filter((p) => p.status === "TRIAL").length,
+                  label: "Trial players",
+                  Icon: Users,
+                  hint: "Show trial players only",
+                  pressed: status === "TRIAL",
+                  go: () => {
+                    setStatus(status === "TRIAL" ? "" : "TRIAL");
+                    setPage(1);
+                  },
+                },
+              ] as {
+                n: number;
+                label: string;
+                Icon: typeof Users;
+                hint: string;
+                pressed?: boolean;
+                go?: () => void;
+              }[]
+            ).map(({ n, label, Icon, hint, pressed, go }) => {
+              const body = (
+                <>
+                  <span className="portal-round">
+                    <Icon size={23} />
+                  </span>
+                  <span>
+                    <strong>{n}</strong>
+                    <p>{label}</p>
+                  </span>
+                </>
+              );
+              return go ? (
+                <button
+                  type="button"
+                  className={`portal-card portal-stat portal-stat-button${pressed ? " active" : ""}`}
+                  key={label}
+                  title={hint}
+                  aria-label={`${label}: ${n}. ${hint}`}
+                  aria-pressed={pressed}
+                  data-leave-editor
+                  onClick={go}
+                >
+                  {body}
+                </button>
+              ) : (
+                <div className="portal-card portal-stat" key={label}>
+                  {body}
+                </div>
+              );
+            })}
           </div>
           <div className="portal-table-wrap">
             <table>
