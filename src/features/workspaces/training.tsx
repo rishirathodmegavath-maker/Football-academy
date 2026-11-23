@@ -1309,6 +1309,13 @@ export function SessionDesk({
       <Card>
         <h2>Session desk · {s.theme}</h2>
         <Badge>{s.status}</Badge>
+        {(s.status === "DRAFT" || s.status === "SCHEDULED") && (
+          <p role="note">
+            {s.status === "DRAFT"
+              ? "Draft: press Schedule session to put it in the calendar, then Start training when the session begins."
+              : "Scheduled: press Start training when the session begins. Attendance and evidence open once it is in progress."}
+          </p>
+        )}
         <p>
           {displayLocal(s.startLocal)} · {s.timezone} · {s.location} ·
           Record version {s.version}
@@ -1701,7 +1708,9 @@ function EvidenceEditor({
       s.roster.some((p) => p.playerId === selectedPlayer) ? selectedPlayer : "",
     ),
     [drillId, setDrill] = useState(
-      s.agenda.some((a) => a.drill.id === selectedDrill) ? selectedDrill : "",
+      s.agenda.some((a) => a.drill.id === selectedDrill)
+        ? selectedDrill
+        : (s.agenda[0]?.drill.id ?? ""),
     ),
     [observation, setObservation] = useState(""),
     [conditions, setConditions] = useState(""),
@@ -1796,6 +1805,12 @@ function EvidenceEditor({
                 return;
               setPlayer(e.target.value);
               onSelectPlayer(e.target.value);
+              // the drill chosen for this player in the session objectives is the natural one to record against
+              const planned = s.objectives.find(
+                (o) => o.playerId === e.target.value,
+              )?.drillId;
+              if (planned && s.agenda.some((a) => a.drill.id === planned))
+                setDrill(planned);
               setObservation("");
               setNote("");
               setConditions("");
@@ -1825,7 +1840,17 @@ function EvidenceEditor({
         </label>
         <label>
           Evidence drill
-          <select value={drillId} onChange={(e) => setDrill(e.target.value)}>
+          <select
+            aria-label="Evidence drill"
+            required
+            value={drillId}
+            onChange={(e) => setDrill(e.target.value)}
+          >
+            <option value="">
+              {s.agenda.length
+                ? "Choose a session drill"
+                : "No drills in this session yet"}
+            </option>
             {s.agenda.map((a, i) => (
               <option key={i} value={a.drill.id}>
                 {a.drill.name}
@@ -1926,7 +1951,26 @@ function EvidenceEditor({
             onChange={(e) => setNote(e.target.value)}
           />
         </label>
-        <Button disabled={w.busy || s.status !== "IN_PROGRESS"}>
+        {s.status !== "IN_PROGRESS" && (
+          <p role="note">
+            {s.status === "DRAFT"
+              ? "Evidence can be saved once training has started. This session is still a draft: press Schedule session, then Start training, at the top of the session desk."
+              : s.status === "SCHEDULED"
+                ? "Evidence can be saved once training has started. Press Start training at the top of the session desk."
+                : "Evidence can only be saved while a session is in progress."}
+          </p>
+        )}
+        {!s.agenda.length && (
+          <p role="note">
+            This session has no drills. Add drills to the session agenda, then
+            record evidence against one of them.
+          </p>
+        )}
+        <Button
+          disabled={
+            w.busy || s.status !== "IN_PROGRESS" || !s.agenda.length
+          }
+        >
           Save evidence for review
         </Button>
       </form>
