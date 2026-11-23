@@ -1,0 +1,403 @@
+/* Sign-in, password reset, academy chooser, account security and refusal pages.
+   Same slate-and-green identity and tokens as the academy portal; every rule is scoped to these pages. */
+.secure-entry,
+.secure-page,
+.secure-workspace {
+  --secure-green: #15803d;
+  font-family: var(--portal-font);
+  font-size: 14px;
+  line-height: 1.55;
+  color: #0f172a;
+}
+.secure-entry {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 32px 16px;
+  background: #f8fafc;
+}
+/* Sign-in artwork: one picture (athletes at both sides, the middle left clear
+   for the card) fills the page. Decoration only, so a CSS background, not an
+   image a screen reader would meet. */
+.secure-entry.secure-entry-art {
+  background: #f4f9f7 url("/brand/sign-in-art.webp") center / cover no-repeat;
+}
+.secure-entry .card {
+  width: min(100%, 420px);
+  display: grid;
+  gap: 14px;
+  padding: 28px;
+}
+.secure-wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  color: #0f172a;
+  text-decoration: none;
+}
+.secure-wordmark .sportozen-symbol {
+  height: 38px;
+  width: auto;
+  flex: none;
+}
+.secure-entry .secure-wordmark .sportozen-symbol {
+  height: 52px;
+}
+.secure-wordmark-text span {
+  color: var(--secure-green);
+  font-size: 0.62em;
+  letter-spacing: 1.6px;
+  margin-left: 2px;
+}
+.secure-entry .report-kicker,
+.secure-page .report-kicker {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  color: var(--secure-green);
+}
+.secure-entry h1,
+.secure-page h1 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  color: #0f172a;
+}
+.secure-page h2 {
+  margin: 0 0 6px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #0f172a;
+}
+.secure-entry .form-stack {
+  display: grid;
+  gap: 14px;
+}
+.secure-entry label,
+.secure-page label {
+  display: grid;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+}
+.secure-entry input,
+.secure-page input:not([type="checkbox"]),
+.secure-page select,
+.secure-page textarea {
+  min-height: 44px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  background: #ffffff;
+  padding: 8px 12px;
+  font: inherit;
+  font-weight: 400;
+  color: #0f172a;
+}
+.secure-entry input:focus-visible,
+.secure-page input:focus-visible,
+.secure-page select:focus-visible,
+.secure-page textarea:focus-visible {
+  outline: none;
+  border-color: var(--secure-green);
+  box-shadow: 0 0 0 3px rgba(21, 128, 61, 0.18);
+}
+.secure-entry .button,
+.secure-page .button {
+  min-height: 44px;
+  justify-content: center;
+  border-radius: 6px;
+  font: inherit;
+  font-weight: 600;
+}
+.secure-entry .button.primary,
+.secure-page .button.primary {
+  background: var(--secure-green);
+  border-color: var(--secure-green);
+  color: #ffffff;
+}
+.secure-entry .button.primary:hover,
+.secure-page .button.primary:hover {
+  background: #166534;
+  border-color: #166534;
+}
+.secure-entry .button.secondary,
+.secure-page .button.secondary {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #0f172a;
+}
+.secure-entry .button.secondary:hover,
+.secure-page .button.secondary:hover {
+  background: #f1f5f9;
+}
+.secure-entry .button:focus-visible,
+.secure-page .button:focus-visible,
+.secure-entry a:focus-visible,
+.secure-page a:focus-visible {
+  outline: 2px solid var(--secure-green);
+  outline-offset: 2px;
+}
+.secure-entry .muted,
+.secure-page .muted {
+  margin: 0;
+  font-size: 12.5px;
+  color: #475569;
+}
+.secure-entry [role="status"],
+.secure-entry [role="alert"],
+.secure-page [role="status"],
+.secure-page [role="alert"] {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid;
+  font-size: 13px;
+}
+.secure-entry [role="status"],
+.secure-page [role="status"] {
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+  color: #14532d;
+}
+.secure-entry [role="alert"],
+.secure-page [role="alert"] {
+  background: #fef2f2;
+  border-color: #fecaca;
+  color: #991b1b;
+}
+/* Show / hide button inside a password field. The button is a sibling of the
+   label (so the field's name stays "Password") and sits over the input's right edge. */
+.secure-entry .password-field {
+  position: relative;
+}
+.secure-entry .password-field input {
+  padding-right: 48px;
+}
+/* Edge draws its own reveal icon in password fields; this is the only one wanted. */
+.secure-entry .password-field input::-ms-reveal,
+.secure-entry .password-field input::-ms-clear {
+  display: none;
+}
+.secure-entry .password-toggle {
+  position: absolute;
+  right: 2px;
+  bottom: 2px;
+  width: 44px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #475569;
+  cursor: pointer;
+}
+.secure-entry .password-toggle:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+.secure-entry .password-toggle:focus-visible {
+  outline: 2px solid var(--secure-green);
+  outline-offset: 0;
+}
+.secure-entry .password-toggle-text {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+/* Continue with Google, and the OR divider that separates it from the e-mail form. */
+.secure-entry .google-signin {
+  display: grid;
+  gap: 10px;
+}
+.secure-entry .button.google {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #ffffff;
+  border: 1px solid #94a3b8;
+  color: #1f1f1f;
+}
+.secure-entry .button.google:hover:not(:disabled) {
+  background: #f8fafc;
+  border-color: #64748b;
+}
+.secure-entry .button.google:disabled {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #475569;
+  cursor: not-allowed;
+}
+.secure-entry .button.google:disabled .google-mark {
+  opacity: 0.55;
+}
+.secure-entry .google-mark {
+  flex: none;
+}
+.secure-entry .google-spinner {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #cbd5e1;
+  border-top-color: #4285f4;
+  border-radius: 50%;
+  animation: google-spin 0.8s linear infinite;
+}
+@keyframes google-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .secure-entry .google-spinner {
+    animation: none;
+    border-top-color: #cbd5e1;
+  }
+}
+.secure-entry .secure-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 2px 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  color: #475569;
+}
+.secure-entry .secure-divider::before,
+.secure-entry .secure-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #cbd5e1;
+}
+.secure-entry > a:not(.secure-wordmark),
+.secure-page .text-link {
+  color: var(--secure-green);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.secure-page {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 24px 20px 48px;
+}
+.secure-topline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-bottom: 16px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e2e8f0;
+}
+.secure-page .page-title {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 0 0 16px;
+}
+.secure-page .page-title p {
+  margin: 4px 0 0;
+  color: #475569;
+}
+.secure-page .card {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.22s ease;
+}
+.secure-page .card p {
+  color: #475569;
+}
+.secure-page .card > .button {
+  margin-top: 8px;
+}
+.secure-page .text-link {
+  font-size: 13px;
+}
+.secure-page .workspace-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 16px;
+  margin: 20px 0;
+}
+.secure-page .workspace-grid .card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  border-color: #e2e8f0;
+}
+.secure-page .workspace-grid .card:hover {
+  transform: translateY(-4px);
+  border-color: #cbd5e1;
+  box-shadow: 0 14px 28px -4px rgba(15, 23, 42, 0.12), 0 4px 10px -2px rgba(15, 23, 42, 0.06);
+}
+.secure-page .workspace-grid .card:active {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px -2px rgba(15, 23, 42, 0.08);
+}
+.secure-page .badge {
+  display: inline-block;
+  margin-bottom: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #f0fdf4;
+  color: #166534;
+  font-size: 11.5px;
+  font-weight: 600;
+}
+.secure-page .two-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.secure-page .two-columns > .card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 8px 20px -2px rgba(15, 23, 42, 0.07), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
+}
+@media (max-width: 480px) {
+  .secure-wordmark .sportozen-symbol {
+    height: 32px;
+  }
+  .secure-entry .secure-wordmark .sportozen-symbol {
+    height: 44px;
+  }
+  .secure-wordmark {
+    font-size: 19px;
+  }
+}
+@media (max-width: 767px) {
+  .secure-page {
+    padding: 16px 12px 32px;
+  }
+  .secure-page .two-columns {
+    grid-template-columns: 1fr;
+  }
+  .secure-entry .card {
+    padding: 20px;
+  }
+}

@@ -1,0 +1,17 @@
+# Weekly update proposals for what the application is built from. Security
+# updates are raised as soon as an advisory is published. Nothing is merged
+# automatically: each proposal runs the full workflow and needs a reviewer.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      minor-and-patch:
+        update-types: [minor, patch]
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly

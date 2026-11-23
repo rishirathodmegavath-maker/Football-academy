@@ -1,0 +1,6 @@
+# Preserve reference and generated PDF bytes, including cross-reference offsets.
+*.pdf binary
+
+# Operational scripts and service definitions must keep LF line endings on Linux.
+deploy/** text eol=lf
+*.sh text eol=lf

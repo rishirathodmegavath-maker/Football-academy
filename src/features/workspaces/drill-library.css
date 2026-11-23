@@ -1,0 +1,585 @@
+/* Drill library: scoped with the dl- prefix so nothing else is affected. */
+.dl-library {
+  display: block;
+  min-width: 0;
+}
+.dl-library * {
+  box-sizing: border-box;
+}
+.dl-header {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.dl-header > div {
+  flex: 1 1 320px;
+  min-width: 0;
+}
+.dl-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface-card);
+  color: var(--text);
+  padding: 8px 13px;
+  min-height: 40px;
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--fs-small);
+  font-weight: 500;
+}
+.dl-btn:hover {
+  background: var(--surface-subtle);
+  border-color: var(--border-hover);
+}
+.dl-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.dl-btn:focus-visible,
+.dl-chips button:focus-visible,
+.dl-library input:focus-visible,
+.dl-library select:focus-visible,
+.dl-dialog :is(input, select, textarea, summary):focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+.dl-primary {
+  background: var(--green);
+  border-color: var(--green);
+  color: var(--surface-card);
+}
+.dl-primary:hover {
+  background: var(--green-dark);
+  border-color: var(--green-dark);
+}
+.dl-filters {
+  display: grid;
+  gap: 12px;
+  margin: 14px 0;
+}
+.dl-search,
+.dl-filters label,
+.dl-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: var(--fs-caption);
+  color: var(--text-secondary);
+  margin: 0;
+}
+.dl-search-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  padding: 0 10px;
+  background: var(--surface-card);
+}
+.dl-library .dl-search-box input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  padding: 11px 0;
+  background: transparent;
+  box-shadow: none;
+  font: inherit;
+  color: var(--text);
+}
+/* The box shows the focus, as the portal's other fields do (green border and soft ring); the input inside adds no second outline. */
+.dl-search-box:focus-within {
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px var(--focus-ring-soft);
+}
+.dl-library .dl-search-box input:focus,
+.dl-library .dl-search-box input:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+.dl-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.dl-chips button {
+  border: 1px solid var(--border-strong);
+  background: var(--surface-card);
+  color: var(--text);
+  border-radius: var(--radius-full);
+  padding: 7px 12px;
+  min-height: 36px;
+  font: inherit;
+  font-size: 12.5px;
+  cursor: pointer;
+}
+.dl-chips button[aria-pressed="true"] {
+  background: var(--green);
+  border-color: var(--green);
+  color: var(--surface-card);
+}
+.dl-count {
+  display: inline-block;
+  margin-left: 4px;
+  font-size: var(--fs-caption);
+  opacity: 0.8;
+}
+.dl-row {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+.dl-row > label {
+  flex: 1 1 160px;
+  min-width: 0;
+}
+.dl-check {
+  flex-direction: row !important;
+  align-items: center;
+  gap: 8px !important;
+  min-height: 36px;
+}
+.dl-library select,
+.dl-form input[type="text"],
+.dl-form input[type="number"],
+.dl-form select,
+.dl-form textarea {
+  width: 100%;
+  max-width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  font: inherit;
+  color: var(--text);
+  background: var(--surface-card);
+}
+.dl-note,
+.dl-warning,
+.dl-count-line,
+.dl-empty,
+.dl-version {
+  font-size: 12.5px;
+  line-height: 1.5;
+  margin: 8px 0;
+  color: var(--text-secondary);
+}
+.dl-warning {
+  background: var(--status-warning-bg);
+  border: 1px solid var(--status-warning-border);
+  color: var(--status-warning-text);
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+}
+.dl-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+  gap: 16px;
+}
+.dl-card {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 340px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--surface-card);
+  min-width: 0;
+}
+.dl-card-body {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+}
+.dl-card h3 {
+  font-size: 15px;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.dl-summary {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.dl-meta {
+  font-size: var(--fs-caption);
+  color: var(--text-tertiary);
+  margin: 0;
+}
+.dl-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: auto;
+  padding-top: 8px;
+}
+.dl-badges,
+.dl-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+}
+.dl-badge {
+  font-size: var(--fs-caption);
+  background: var(--surface-hover);
+  color: var(--text-strong);
+  border-radius: var(--radius-full);
+  padding: 3px 9px;
+}
+.dl-universal {
+  background: var(--status-info-bg);
+  color: var(--status-info-text);
+}
+.dl-academy,
+.dl-copy {
+  background: var(--status-success-bg);
+  color: var(--status-success-text);
+}
+.dl-archived {
+  background: var(--status-danger-bg);
+  color: var(--status-danger-text);
+}
+.dl-diagram {
+  margin: 0;
+}
+.dl-diagram svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.dl-diagram figcaption {
+  font-size: var(--fs-caption);
+  color: var(--text-secondary);
+  line-height: 1.5;
+  padding: 8px 2px 0;
+}
+.dl-legend {
+  display: block;
+  color: var(--text-tertiary);
+  font-size: var(--fs-caption);
+}
+.dl-thumb figcaption {
+  display: none;
+}
+.dl-nothumb {
+  height: 90px;
+  background: var(--surface-hover);
+}
+.dl-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay);
+  z-index: 1300;
+}
+.dl-dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(860px, calc(100% - 20px));
+  max-height: 92vh;
+  overflow-y: auto;
+  background: var(--surface-card);
+  color: var(--text);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  z-index: 1301;
+  font-family: var(--portal-font);
+}
+.dl-dialog h2,
+.dl-dialog [role="dialog"] > h2 {
+  font-size: 19px;
+  margin: 0 36px 10px 0;
+  overflow-wrap: anywhere;
+}
+.dl-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  min-width: 40px;
+  min-height: 40px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  background: var(--surface-card);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.dl-detail {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+.dl-section h4 {
+  font-size: 13.5px;
+  margin: 14px 0 6px;
+  color: var(--text);
+}
+.dl-section h5 {
+  font-size: 12.5px;
+  margin: 8px 0 2px;
+}
+.dl-section p,
+.dl-section li {
+  font-size: var(--fs-small);
+  line-height: 1.6;
+  margin: 3px 0;
+  overflow-wrap: anywhere;
+}
+.dl-section ul,
+.dl-section ol {
+  margin: 4px 0;
+  padding-left: 20px;
+}
+.dl-objective {
+  font-style: italic;
+}
+.dl-facts {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 4px 14px;
+  font-size: var(--fs-small);
+  margin: 10px 0;
+}
+.dl-facts dt {
+  color: var(--text-tertiary);
+}
+.dl-facts dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.dl-refs {
+  list-style: none;
+  padding-left: 0 !important;
+}
+.dl-sticky {
+  position: sticky;
+  bottom: -22px;
+  background: var(--surface-card);
+  padding: 12px 0 2px;
+  border-top: 1px solid var(--border);
+  margin-top: 14px;
+}
+.dl-form {
+  display: grid;
+  gap: 12px;
+}
+.dl-form details {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  display: grid;
+  gap: 12px;
+}
+.dl-form summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: var(--fs-small);
+  min-height: 32px;
+}
+.dl-form fieldset {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 8px 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  min-width: 0;
+}
+.dl-form legend {
+  font-size: var(--fs-caption);
+  color: var(--text-secondary);
+  padding: 0 4px;
+}
+.dl-form small {
+  color: var(--text-tertiary);
+  font-size: var(--fs-caption);
+}
+/* Session and plan picker */
+.dl-picker-list {
+  display: grid;
+  gap: 8px;
+  margin: 10px 0;
+}
+.dl-pick {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 10px;
+  min-width: 0;
+}
+.dl-pick > label {
+  display: flex;
+  flex: 1;
+  gap: 10px;
+  align-items: flex-start;
+  min-width: 0;
+  flex-direction: row;
+}
+.dl-pick strong {
+  display: block;
+  font-size: 13.5px;
+  overflow-wrap: anywhere;
+}
+.dl-pick small {
+  display: block;
+  color: var(--text-tertiary);
+  font-size: var(--fs-caption);
+  margin-top: 2px;
+}
+.dl-preview {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 10px;
+  margin: 8px 0;
+}
+.dl-agenda-tools {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.dl-total {
+  font-size: 12.5px;
+  font-weight: 600;
+  margin: 6px 0;
+}
+@media (max-width: 640px) {
+  .dl-dialog {
+    padding: 16px;
+    width: calc(100% - 12px);
+    max-height: 94vh;
+  }
+  .dl-sticky {
+    bottom: -16px;
+  }
+  .dl-facts {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .dl-facts dd {
+    margin-bottom: 6px;
+  }
+  .dl-header .dl-btn {
+    width: 100%;
+  }
+}
+
+.dl-agenda-thumb {
+  width: 76px;
+  flex: none;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+.dl-agenda-tools {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* Coaching detail inside a session: the saved snapshot, readable on a pitch. */
+.dl-session-drills {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0;
+  min-width: 0;
+}
+.dl-session-drills > h3 {
+  margin: 0;
+}
+.dl-session-drill {
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  background: var(--surface-card);
+  min-width: 0;
+}
+.dl-session-drill > summary {
+  cursor: pointer;
+  padding: 12px 14px;
+  min-height: 44px;
+  font-weight: 600;
+  font-size: var(--fs-body);
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+.dl-session-drill > summary:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+.dl-session-drill[open] > summary {
+  border-bottom: 1px solid var(--border);
+}
+.dl-session-drill > :not(summary) {
+  margin: 12px 14px 14px;
+  min-width: 0;
+}
+.dl-session-drill .dl-diagram,
+.dl-session-drill .dl-diagram svg {
+  max-width: 100%;
+}
+.dl-locked {
+  background: var(--surface-hover);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  font-size: 12.5px;
+  color: var(--text-strong);
+}
+.dl-locked ul {
+  margin: 6px 0 0;
+  padding-left: 18px;
+}
+.dl-counter {
+  font-size: var(--fs-caption);
+  color: var(--text-tertiary);
+  text-align: right;
+}
+.dl-counter[data-over="true"] {
+  color: var(--red);
+  font-weight: 600;
+}
+.dl-history ol {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 10px;
+}
+.dl-history li {
+  font-size: var(--fs-small);
+  overflow-wrap: anywhere;
+}
+.dl-history small {
+  color: var(--text-tertiary);
+}
+@media (max-width: 640px) {
+  .dl-session-drill > summary {
+    font-size: 13.5px;
+  }
+}
+@media (pointer: coarse) {
+  .dl-btn,
+  .dl-chips button,
+  .dl-library select,
+  .dl-search-box,
+  .dl-check,
+  .dl-close {
+    min-height: var(--target-touch);
+  }
+  .dl-close {
+    min-width: var(--target-touch);
+  }
+}

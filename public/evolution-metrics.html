@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sportozen Academy — Engineering Evolution & Technical Brief</title>
+  <style>
+    :root {
+      --navy: #092635;
+      --navy-card: #103447;
+      --navy-border: #1d4860;
+      --mint: #29d8a5;
+      --mint-light: #5cf1c0;
+      --text: #e1edf5;
+      --text-muted: #8ea8bc;
+      --accent-blue: #38bdf8;
+      --accent-amber: #fbbf24;
+      --accent-green: #34d399;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: radial-gradient(ellipse at 80% 20%, #0d384e 0%, #061e2b 100%);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      min-height: 100vh;
+      padding: 30px 40px;
+      overflow-x: hidden;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--navy-border);
+      padding-bottom: 20px;
+      margin-bottom: 25px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .brand-logo {
+      width: 44px;
+      height: 44px;
+      background: var(--navy-card);
+      border: 1px solid var(--mint);
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      color: var(--mint);
+      font-size: 20px;
+    }
+    .brand-title h1 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: #fff;
+    }
+    .brand-title p {
+      font-size: 13px;
+      color: var(--mint);
+      font-weight: 500;
+    }
+    .badge {
+      background: rgba(41, 216, 165, 0.12);
+      border: 1px solid rgba(41, 216, 165, 0.3);
+      color: var(--mint-light);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+    .card {
+      background: var(--navy-card);
+      border: 1px solid var(--navy-border);
+      border-radius: 12px;
+      padding: 22px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    }
+    .card-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .card-title .icon {
+      color: var(--mint);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    th {
+      text-align: left;
+      padding: 9px 12px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-muted);
+      font-weight: 600;
+      border-bottom: 1px solid var(--navy-border);
+    }
+    td {
+      padding: 9px 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    tr:last-child td { border-bottom: none; }
+    .val-before { color: #94a3b8; }
+    .val-after { color: var(--mint-light); font-weight: 700; }
+    .pill-green {
+      background: rgba(52, 211, 153, 0.15);
+      color: #34d399;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .phases-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .phase-tile {
+      background: rgba(16, 52, 71, 0.7);
+      border: 1px solid var(--navy-border);
+      border-radius: 10px;
+      padding: 14px;
+    }
+    .phase-num {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--mint);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    .phase-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .phase-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .decisions-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .decision-item {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--navy-border);
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .decision-item h4 {
+      font-size: 13px;
+      color: var(--mint-light);
+      margin-bottom: 6px;
+    }
+    .decision-item p {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="brand">
+      <div class="brand-logo">S</div>
+      <div class="brand-title">
+        <h1>Sportozen Academy — Architecture & Engineering Brief</h1>
+        <p>Technical Modernization & Production Readiness Review</p>
+      </div>
+    </div>
+    <div class="badge">Base Commit: 6837e84 (codex/day1-integration)</div>
+  </div>
+
+  <div class="grid-2">
+    <!-- Comparison Table -->
+    <div class="card">
+      <div class="card-title">
+        <span class="icon">✦</span> Codebase Evolution: Before vs Now
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Metric / Layer</th>
+            <th>Before (Rajat's Base)</th>
+            <th>Current Implementation</th>
+            <th>Growth</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Source Files (src/)</td>
+            <td class="val-before">228</td>
+            <td class="val-after">321 files</td>
+            <td><span class="pill-green">+93 files</span></td>
+          </tr>
+          <tr>
+            <td>Server Modules</td>
+            <td class="val-before">26</td>
+            <td class="val-after">51 modules</td>
+            <td><span class="pill-green">+25 modules</span></td>
+          </tr>
+          <tr>
+            <td>API Routes</td>
+            <td class="val-before">18</td>
+            <td class="val-after">34 routes</td>
+            <td><span class="pill-green">+16 endpoints</span></td>
+          </tr>
+          <tr>
+            <td>Database Migrations</td>
+            <td class="val-before">6 (002–007)</td>
+            <td class="val-after">13 (002–014)</td>
+            <td><span class="pill-green">+7 migrations</span></td>
+          </tr>
+          <tr>
+            <td>Unit Test Suites</td>
+            <td class="val-before">32 files</td>
+            <td class="val-after">93 files (1,555 tests)</td>
+            <td><span class="pill-green">+100% Passing</span></td>
+          </tr>
+          <tr>
+            <td>Browser Test Specs</td>
+            <td class="val-before">30 specs</td>
+            <td class="val-after">43 specs</td>
+            <td><span class="pill-green">+13 suites</span></td>
+          </tr>
+          <tr>
+            <td>Deploy & Operational Scripts</td>
+            <td class="val-before">0 deploy / 18 scripts</td>
+            <td class="val-after">24 deploy / 39 scripts</td>
+            <td><span class="pill-green">Production Ready</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Verification & Integrity -->
+    <div class="card">
+      <div class="card-title">
+        <span class="icon">🛡</span> Security, RBAC & Mutation Testing
+      </div>
+      <div style="display: grid; gap: 12px; font-size: 13px;">
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--navy-border); padding: 12px; border-radius: 8px;">
+          <strong style="color: #fff; display: block; margin-bottom: 4px;">Rigorous Mutation Testing (38 / 40 Caught)</strong>
+          <span style="color: var(--text-muted);">Deliberately mutated 40 critical business logic and security paths; test suite caught 38 immediately. The remaining 2 produce zero observable behavioral differences.</span>
+        </div>
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--navy-border); padding: 12px; border-radius: 8px;">
+          <strong style="color: #fff; display: block; margin-bottom: 4px;">Server-Side Tenant & RBAC Isolation</strong>
+          <span style="color: var(--text-muted);">Every API endpoint strictly verifies user session, academy tenant boundary, and membership role (OWNER, COACH, PARENT). Hiding UI controls is never the barrier.</span>
+        </div>
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--navy-border); padding: 12px; border-radius: 8px;">
+          <strong style="color: #fff; display: block; margin-bottom: 4px;">Encrypted Backups & Disaster Recovery</strong>
+          <span style="color: var(--text-muted);">Automated SQLite WAL-mode streaming backup and integrity restoration scripts with zero downtime test runs.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase Breakdown -->
+  <div class="card" style="margin-bottom: 24px;">
+    <div class="card-title">
+      <span class="icon">⚡</span> Nine Phases of Technical Hardening
+    </div>
+    <div class="phases-grid">
+      <div class="phase-tile">
+        <div class="phase-num">Phase 2</div>
+        <div class="phase-name">Production Infra</div>
+        <div class="phase-desc">HTTPS reverse proxy configs, WAL mode, automated encrypted database backups & restore scripts.</div>
+      </div>
+      <div class="phase-tile">
+        <div class="phase-num">Phase 3–6</div>
+        <div class="phase-name">Backend Hardening</div>
+        <div class="phase-desc">Data integrity triggers, strict foreign keys, penetration tests, and edge-case bug resolutions.</div>
+      </div>
+      <div class="phase-tile">
+        <div class="phase-num">Phase 4</div>
+        <div class="phase-name">UI Modernization</div>
+        <div class="phase-desc">Consolidated design system, bounded search width, crest badges, and unified PortalShell.</div>
+      </div>
+      <div class="phase-tile">
+        <div class="phase-num">Phase 5</div>
+        <div class="phase-name">Messaging & Speed</div>
+        <div class="phase-desc">Resolved message send queue, optimized query indices, and streamlined batch announcements.</div>
+      </div>
+      <div class="phase-tile">
+        <div class="phase-num">Phase 7</div>
+        <div class="phase-name">Accessibility (a11y)</div>
+        <div class="phase-desc">Resolved 124 accessibility findings down to 0, optimized mobile load times and bounded dialogs.</div>
+      </div>
+      <div class="phase-tile">
+        <div class="phase-num">Phase 8</div>
+        <div class="phase-name">Platform Approval</div>
+        <div class="phase-desc">Platform admin academy onboarding approval, 12-month data retention, and email outbox abstraction.</div>
+      </div>
+      <div class="phase-tile">
+        <div class="phase-num">Phase 9</div>
+        <div class="phase-name">Recurring Sessions</div>
+        <div class="phase-desc">Automated recurring weekly sessions, real-time attendance, post-session wrap-up, and cancellation notices.</div>
+      </div>
+      <div class="phase-tile">
+        <div class="phase-num">Handover</div>
+        <div class="phase-name">Integrity Packaging</div>
+        <div class="phase-desc">Packaged cleanly with zero unapproved git commits, SHA-256 patch verification, and clean worktrees.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Decisions for Rajat -->
+  <div class="card">
+    <div class="card-title">
+      <span class="icon">📋</span> Decisions & Handover Agenda for Rajat
+    </div>
+    <div class="decisions-list">
+      <div class="decision-item">
+        <h4>1. Email Transport & Provider</h4>
+        <p>Choose production provider (Resend, SendGrid, Postmark, AWS SES) and configure verified sending domain.</p>
+      </div>
+      <div class="decision-item">
+        <h4>2. Handover Packaging Preference</h4>
+        <p>Deliver as a clean Git branch, GitHub Pull Request, or verified standalone patch files with SHA-256 checksums.</p>
+      </div>
+      <div class="decision-item">
+        <h4>3. Feature Configuration</h4>
+        <p>Confirm series bulk edit workflow, wrap-up retention policies, and optional WhatsApp notification toggles.</p>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

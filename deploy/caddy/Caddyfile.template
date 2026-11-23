@@ -1,0 +1,30 @@
+# /etc/caddy/Caddyfile  (Caddy 2.x). ALTERNATIVE to nginx; use one, not both.
+#
+# Template. Replace __DOMAIN__ with the owner-approved domain (OWNER DECISION).
+# Caddy obtains and renews the certificate itself (ports 80 and 443 must be
+# reachable and DNS must already point here). Caddy has no built-in request
+# rate limiting; use nginx, or put a CDN/WAF in front, if edge limits are needed.
+__DOMAIN__ {
+	request_body {
+		max_size 2MB
+	}
+	header -Server
+
+	# Readiness is for this server only.
+	@ready path /api/ready
+	handle @ready {
+		@local remote_ip 127.0.0.1 ::1
+		handle @local {
+			reverse_proxy 127.0.0.1:3000
+		}
+		respond 403
+	}
+
+	reverse_proxy 127.0.0.1:3000 {
+		# Overwrite, never append: one trustworthy client address.
+		header_up X-Forwarded-For {remote_host}
+		header_up X-Real-IP {remote_host}
+		header_up -Forwarded
+	}
+}
+

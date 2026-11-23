@@ -1,0 +1,346 @@
+/* Recurring sessions, session wrap-up and attendance history. Shared by the
+   staff Calendar and Training screens and the parent schedule. Meaning is
+   always carried by text; colour only reinforces it. */
+.sx-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.sx-small {
+  font-size: 12px;
+  line-height: 1.6;
+  color: #475569;
+}
+.sx-eyebrow {
+  margin: 0 0 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #475569;
+}
+.sx-form,
+.sx-wrapup,
+.sx-history,
+.sx-followups,
+.sx-series,
+.sx-outcome {
+  color: #0f172a;
+  font-size: 13px;
+}
+.sx-form label,
+.sx-wrapup label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 12px 0;
+  font-size: 12px;
+  color: #475569;
+}
+.sx-form .check-row {
+  flex-direction: row;
+  align-items: center;
+  gap: 9px;
+  margin: 8px 0;
+}
+.sx-form input,
+.sx-form select,
+.sx-form textarea,
+.sx-wrapup input,
+.sx-wrapup select,
+.sx-wrapup textarea {
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+  padding: 9px 10px;
+  background: #fff;
+  color: #0f172a;
+  font: inherit;
+  max-width: 100%;
+  min-width: 0;
+}
+.sx-form input[type="checkbox"] {
+  padding: 0;
+}
+.sx-wrapup textarea {
+  min-height: 84px;
+  resize: vertical;
+}
+.sx-form fieldset {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  margin: 14px 0;
+  padding: 12px;
+  min-width: 0;
+}
+.sx-form legend {
+  padding: 0 5px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.sx-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+}
+.sx-row label {
+  flex: 1 1 130px;
+}
+.sx-form button,
+.sx-wrapup button,
+.sx-history button,
+.sx-followups button,
+.sx-series button,
+.sx-disclosure button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  background: #fff;
+  color: #0f172a;
+  padding: 8px 12px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.sx-form button:hover,
+.sx-wrapup button:hover,
+.sx-history button:hover,
+.sx-followups button:hover,
+.sx-series button:hover,
+.sx-disclosure button:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+}
+.sx-form button:disabled,
+.sx-wrapup button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.sx-form button.sx-primary,
+.sx-wrapup button.sx-primary {
+  background: #0f172a;
+  border-color: #0f172a;
+  color: #fff;
+}
+.sx-form button.sx-primary:hover,
+.sx-wrapup button.sx-primary:hover {
+  background: #1e293b;
+}
+.sx-preview {
+  margin-top: 16px;
+  padding: 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #f8fafc;
+}
+.sx-preview h3,
+.sx-form h3,
+.sx-wrapup h3 {
+  margin: 0 0 8px;
+  font-size: 14px;
+}
+.sx-preview ul,
+.sx-skipped {
+  margin: 0 0 12px;
+  padding-left: 18px;
+}
+.sx-skipped {
+  list-style: none;
+  padding: 0;
+}
+.sx-skipped li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  align-items: baseline;
+  padding: 8px 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+.sx-reason {
+  border: 1px solid #94a3b8;
+  border-radius: 999px;
+  padding: 1px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #1e293b;
+  background: #fff;
+}
+.sx-reason.sx-conflict,
+.sx-reason.sx-time_invalid {
+  border-color: #aa3848;
+  color: #7f1d1d;
+}
+.sx-series {
+  margin: 14px 0;
+  padding: 12px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #f8fafc;
+}
+.sx-series p {
+  margin: 4px 0;
+}
+.sx-outcome {
+  margin-top: 12px;
+  padding: 10px 12px;
+  border: 1px solid #94a3b8;
+  border-radius: 8px;
+  background: #fff;
+}
+.sx-choice legend {
+  font-size: 12px;
+  font-weight: 700;
+}
+.sx-history {
+  margin: 12px 0;
+}
+.sx-flag {
+  margin: 0 0 10px;
+  padding: 9px 12px;
+  border: 1px solid #aa3848;
+  border-radius: 7px;
+  background: #fef2f2;
+  color: #7f1d1d;
+}
+.sx-figures {
+  margin: 6px 0;
+}
+.sx-bar {
+  height: 8px;
+  border-radius: 999px;
+  background: #e2e8f0;
+  overflow: hidden;
+  margin: 6px 0 12px;
+}
+.sx-bar span {
+  display: block;
+  height: 100%;
+  background: #0f766e;
+}
+.sx-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.sx-table td,
+.sx-table th {
+  overflow-wrap: anywhere;
+}
+.sx-table th,
+.sx-table td {
+  padding: 7px 8px;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+.sx-table th {
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: #475569;
+}
+.sx-mark {
+  font-weight: 600;
+}
+.sx-note {
+  display: block;
+  margin-top: 2px;
+  font-size: 11px;
+  color: #475569;
+}
+.sx-absent {
+  color: #7f1d1d;
+}
+.sx-excused {
+  color: #334155;
+}
+.sx-present {
+  color: #0f5132;
+}
+.sx-disclosure {
+  margin-top: 8px;
+}
+.sx-followups {
+  margin: 0 0 18px;
+  padding: 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #fff;
+}
+.sx-followups h2 {
+  margin: 0 0 8px;
+  font-size: 15px;
+}
+.sx-followups ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.sx-followups li {
+  padding: 8px 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+.sx-followups li > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  align-items: center;
+}
+.sx-drills {
+  list-style: none;
+  margin: 0 0 14px;
+  padding: 0;
+}
+.sx-drills li {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 4px 12px;
+  align-items: end;
+  padding: 10px 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+.sx-drills .sx-drill-head {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+}
+.sx-wrapup h3 {
+  margin-top: 16px;
+}
+@media (max-width: 640px) {
+  .sx-row label {
+    flex-basis: 100%;
+  }
+  .sx-table {
+    font-size: 12px;
+  }
+}
+
+/* Radios inside the cancel dialog: the dialog's generic input and label rules
+   would otherwise stretch them and push the text away. */
+.pc-dialog .sx-choice label.check-row {
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  margin: 8px 0;
+  font-size: 13px;
+  color: #0f172a;
+}
+.pc-dialog .sx-choice input[type="radio"] {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  padding: 0;
+}

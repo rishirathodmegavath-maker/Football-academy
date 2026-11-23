@@ -1,0 +1,12 @@
+# /etc/systemd/system/sportozen-ops-deep.timer   (WP8)
+[Unit]
+Description=Run the Sportozen Academy deep database check weekly
+
+[Timer]
+OnCalendar=Sun 03:30
+RandomizedDelaySec=900
+Persistent=true
+Unit=sportozen-ops-deep.service
+
+[Install]
+WantedBy=timers.target

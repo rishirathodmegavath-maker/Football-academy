@@ -1,0 +1,250 @@
+/* Two-column sign-in: a story panel (left) and the form (right). Scoped to
+   .auth-split; the form itself keeps its rules from secure.css. */
+.auth-split {
+  display: grid;
+  grid-template-columns: minmax(340px, 46%) 1fr;
+  min-height: 100vh;
+  background: #f4f8f6;
+}
+
+.auth-split-showcase {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 44px 52px;
+  color: #f4faf6;
+  background-color: #0b1f2c;
+  background-image:
+    radial-gradient(
+      circle at 12% 88%,
+      rgba(21, 128, 61, 0.45),
+      transparent 62%
+    ),
+    linear-gradient(160deg, #0b1f2c 0%, #0c2f27 100%);
+}
+
+.auth-split-pitch {
+  position: absolute;
+  right: -48px;
+  bottom: -56px;
+  width: 400px;
+  height: 500px;
+  color: #cfe8d8;
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+.auth-split-top,
+.auth-split-body,
+.auth-split-footer {
+  position: relative;
+  z-index: 1;
+}
+
+.auth-split-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 6px;
+}
+.auth-split-brand .sportozen-symbol {
+  height: 46px;
+  width: auto;
+  flex: none;
+}
+.auth-split-brand small {
+  margin-left: 2px;
+  font-size: 0.62em;
+  letter-spacing: 1.6px;
+  color: #86efac;
+}
+.auth-split-brand:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 3px;
+}
+
+.auth-split-body {
+  max-width: 460px;
+  display: grid;
+  gap: 18px;
+}
+.auth-split-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #86efac;
+}
+.auth-split-title {
+  margin: 0;
+  font-size: clamp(34px, 3.6vw, 52px);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+}
+.auth-split-title em {
+  font-style: normal;
+  color: #bbf7d0;
+}
+.auth-split-lead {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #d3e3da;
+}
+.auth-split-highlights {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+.auth-split-highlights li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14.5px;
+  color: #e6f1ea;
+}
+.auth-split-highlights svg {
+  flex: none;
+  color: #86efac;
+}
+.auth-split-footer {
+  font-size: 12px;
+  color: #b5c9bd;
+}
+
+/* The form column: the page background is plain, the card keeps its look. */
+.auth-split .secure-entry {
+  min-height: 0;
+  justify-content: center;
+  background: #f4f8f6;
+}
+.auth-split .secure-entry .card {
+  box-shadow: 0 10px 34px rgba(15, 23, 42, 0.07);
+}
+/* The story panel carries the brand on wide screens. */
+@media (min-width: 900px) {
+  .auth-split .secure-entry > .secure-wordmark {
+    display: none;
+  }
+}
+@media (max-width: 899px) {
+  .auth-split {
+    grid-template-columns: 1fr;
+  }
+  .auth-split-showcase {
+    display: none;
+  }
+}
+
+/* The academy list and start page uses the same two columns. */
+.auth-split .secure-page {
+  min-width: 0;
+  padding: 32px clamp(16px, 4vw, 48px);
+  background: #f4f8f6;
+}
+@media (min-width: 900px) {
+  .auth-split .secure-page .secure-topline > .secure-wordmark {
+    display: none;
+  }
+  .auth-split .secure-page .secure-topline {
+    justify-content: flex-end;
+  }
+}
+
+/* Password guide shown while creating an account. */
+.password-strength {
+  display: grid;
+  gap: 8px;
+  font-size: 12.5px;
+  color: #475569;
+}
+.password-strength-head {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  color: #334155;
+}
+.password-strength-bars {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+.password-strength-bars span {
+  height: 5px;
+  border-radius: 3px;
+  background: #e2e8f0;
+}
+.password-strength-bars span.on.level-1,
+.password-strength-bars span.on.level-2 {
+  background: #d97706;
+}
+.password-strength-bars span.on.level-3 {
+  background: #65a30d;
+}
+.password-strength-bars span.on.level-4 {
+  background: #15803d;
+}
+.password-strength-rules {
+  list-style: none;
+  margin: 0;
+  padding: 10px 12px;
+  display: grid;
+  gap: 6px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #f8fafc;
+}
+.password-strength-rules li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.password-strength-rules li.ok {
+  color: #166534;
+}
+
+/* "More settings" on the start form: name and contact email first, the rest on request. */
+.start-more {
+  border-top: 1px solid #e2e8f0;
+  padding-top: 8px;
+}
+.start-more > summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: #15803d;
+  padding: 6px 0;
+}
+.start-more > :not(summary) {
+  margin-top: 14px;
+}
+.start-more.flat {
+  border-top: 0;
+  padding-top: 0;
+}
+.start-more.flat > summary {
+  display: none;
+}
+.start-more.flat > :not(summary):first-of-type {
+  margin-top: 0;
+}
+
+/* In the narrower form column the start page stacks: one card above the other, one field per row. */
+.auth-split .secure-page .two-columns {
+  grid-template-columns: minmax(0, 1fr);
+}
+.auth-split .secure-page .two-columns > .card + .card {
+  margin-top: 0;
+}
+.auth-split .secure-page .form-grid {
+  grid-template-columns: minmax(0, 1fr);
+}

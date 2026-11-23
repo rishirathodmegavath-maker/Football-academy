@@ -1,0 +1,605 @@
+/* The family-facing development report. One layout for the review preview, the
+   parent view and the approved report; it sizes itself to its own box (container
+   queries) so it reads the same in a narrow review column and on a wide page. */
+.development-report.professional-report {
+  --pr-accent: #009d6c;
+  --pr-tint: color-mix(in srgb, var(--pr-accent) 9%, #fff);
+  --pr-tint-strong: color-mix(in srgb, var(--pr-accent) 16%, #fff);
+  --pr-ink: #0b2a3f;
+  --pr-muted: #4f6a80;
+  --pr-line: #e4ecf1;
+  container-type: inline-size;
+  background: #fff;
+  color: var(--pr-ink);
+  border: 1px solid var(--pr-line);
+  border-radius: 12px;
+  padding: 0 0 4px;
+  box-shadow: none;
+  min-width: 0;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  font-family: inherit;
+}
+.professional-report > section,
+.professional-report > footer {
+  margin-left: 22px;
+  margin-right: 22px;
+}
+
+/* Header band: academy, report title and month. */
+.professional-report .pr-academy-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 22px;
+  background: linear-gradient(115deg, var(--pr-tint) 0%, #fff 70%);
+  border-bottom: 1px solid var(--pr-line);
+}
+.professional-report .pr-academy-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+.professional-report .pr-academy-brand img {
+  object-fit: contain;
+  flex: none;
+}
+.professional-report .pr-academy-mark {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: var(--pr-accent);
+  color: #fff;
+  flex: none;
+}
+.professional-report .pr-academy-brand strong {
+  display: block;
+  font-size: 17px;
+  line-height: 1.3;
+}
+.professional-report .pr-academy-brand div span {
+  display: block;
+  font-size: 12px;
+  color: var(--pr-muted);
+  margin-top: 2px;
+}
+.professional-report .pr-period {
+  text-align: right;
+  flex: none;
+}
+.professional-report .pr-period strong {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--pr-tint-strong);
+  color: var(--pr-ink);
+  font-size: 13px;
+  line-height: 1.3;
+}
+.professional-report .pr-period span {
+  display: block;
+  font-size: 11px;
+  color: var(--pr-muted);
+  margin-top: 5px;
+}
+
+/* Player card with the attendance tile. */
+.professional-report .pr-player-header {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 16px;
+  margin-top: 20px;
+  min-width: 0;
+}
+.professional-report .pr-player-photo,
+.professional-report .pr-player-initials {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex: none;
+}
+.professional-report .pr-player-initials {
+  display: grid;
+  place-items: center;
+  background: var(--pr-tint-strong);
+  color: color-mix(in srgb, var(--pr-accent) 70%, #000);
+  font-size: 26px;
+  font-weight: 700;
+}
+.professional-report .pr-player-copy {
+  min-width: 0;
+}
+.professional-report .pr-player-copy h2 {
+  font-size: 22px;
+  line-height: 1.2;
+  letter-spacing: -0.3px;
+  margin: 0 0 4px;
+}
+.professional-report .pr-player-copy p {
+  font-size: 13px;
+  line-height: 1.45;
+  margin: 2px 0;
+  color: var(--pr-muted);
+}
+.professional-report .pr-status-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 11px;
+  color: var(--pr-muted);
+  margin-top: 8px;
+}
+.professional-report .pr-status {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+.professional-report .pr-approved {
+  background: #dff7eb;
+  color: #00704a;
+}
+.professional-report .pr-draft {
+  background: #edf2fb;
+  color: #345b91;
+}
+.professional-report .pr-attendance-tile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: var(--pr-tint);
+  min-width: 0;
+}
+.professional-report .pr-attendance-tile > svg {
+  color: var(--pr-accent);
+  flex: none;
+}
+.professional-report .pr-attendance-tile strong {
+  display: block;
+  font-size: 21px;
+  line-height: 1.2;
+}
+.professional-report .pr-attendance-tile span {
+  display: block;
+  font-size: 12px;
+  color: var(--pr-ink);
+  margin-top: 2px;
+}
+.professional-report .pr-attendance-tile small {
+  display: block;
+  font-size: 11px;
+  color: var(--pr-muted);
+  margin-top: 2px;
+}
+
+/* Attendance breakdown: present, absent, excused and unmarked stay separate. */
+.professional-report .pr-attendance {
+  margin-top: 12px;
+}
+.professional-report .pr-attendance-key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  margin: 0;
+  font-size: 12px;
+}
+.professional-report .pr-attendance-key > div {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+}
+.professional-report .pr-attendance-key dt {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--pr-muted);
+}
+.professional-report .pr-attendance-key dd {
+  margin: 0;
+  font-weight: 700;
+}
+.professional-report .pr-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex: none;
+  background: #009e6c;
+}
+.professional-report .pr-dot-absent {
+  background: #eb4557;
+}
+.professional-report .pr-dot-excused {
+  background: #f0a316;
+}
+.professional-report .pr-dot-unmarked {
+  background: #418cf1;
+}
+
+/* Text defaults. */
+.professional-report h3 {
+  font-size: 16px;
+  line-height: 1.35;
+  letter-spacing: 0;
+  text-transform: none;
+  margin: 0 0 12px;
+  display: flex;
+  gap: 9px;
+  align-items: center;
+}
+.professional-report h3 > svg {
+  color: var(--pr-accent);
+  width: 20px;
+  height: 20px;
+  flex: none;
+}
+.professional-report h4 {
+  font-size: 12.5px;
+  line-height: 1.35;
+  margin: 8px 0 2px;
+}
+.professional-report p {
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 6px 0;
+  color: #34546e;
+}
+.professional-report .pr-method {
+  display: block;
+  font-size: 11px;
+  line-height: 1.55;
+  color: #566b80;
+  margin: 10px 0 0;
+}
+.professional-report .pr-empty {
+  font-size: 13px;
+  color: #566b80;
+  padding: 4px 0;
+  margin: 0;
+}
+.professional-report .pr-section {
+  margin-top: 24px;
+}
+
+/* This month's training focus: a slim strip, not a banner. */
+.professional-report .pr-focus {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-radius: 12px;
+  background: var(--pr-tint);
+  padding: 12px 16px;
+  margin-top: 18px;
+}
+.professional-report .pr-focus > svg {
+  color: var(--pr-accent);
+  flex: none;
+}
+.professional-report .pr-focus h3 {
+  display: block;
+  margin: 0 0 1px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--pr-muted);
+}
+.professional-report .pr-focus p {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--pr-ink);
+  margin: 0;
+}
+.professional-report .pr-focus span {
+  display: block;
+  color: var(--pr-muted);
+  font-size: 12px;
+  line-height: 1.55;
+  margin-top: 4px;
+}
+
+/* What we practised. */
+.professional-report .pr-activity-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+.professional-report .pr-activity {
+  min-width: 0;
+}
+.professional-report .pr-activity img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1.6;
+  object-fit: cover;
+  border-radius: 10px;
+  background: var(--pr-tint);
+}
+.professional-report .pr-activity h4 {
+  font-size: 12.5px;
+  font-weight: 600;
+}
+.professional-report .pr-activity p,
+.professional-report .pr-activity > span {
+  display: block;
+  font-size: 11px;
+  line-height: 1.45;
+  margin: 0;
+  color: #52708a;
+}
+
+/* Coach's feedback, closing note. */
+.professional-report .pr-feedback-box,
+.professional-report .pr-note-box {
+  border-radius: 12px;
+  background: #f4f8f8;
+  padding: 12px 16px;
+}
+.professional-report .pr-feedback-box p,
+.professional-report .pr-note-box p {
+  margin: 4px 0;
+  color: var(--pr-ink);
+}
+.professional-report .pr-narrative p {
+  white-space: pre-line;
+}
+.professional-report .pr-record-details {
+  border: 1px solid #e3ecf1;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-top: 12px;
+  font-size: 12px;
+}
+.professional-report .pr-record-details summary {
+  cursor: pointer;
+  color: #00704f;
+  font-weight: 600;
+  line-height: 1.6;
+}
+.professional-report .pr-record-details[open] summary {
+  margin-bottom: 10px;
+}
+
+/* Recorded measurements. */
+.professional-report .pr-measurement {
+  margin: 4px 0 0;
+}
+.professional-report .pr-measurement figcaption strong {
+  display: block;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.professional-report .pr-measurement figcaption > span {
+  display: block;
+  color: #566b80;
+  font-size: 11px;
+  margin-top: 3px;
+}
+.professional-report .pr-chart-block {
+  margin-top: 8px;
+  min-width: 0;
+}
+.professional-report .pr-chart-block svg {
+  display: block;
+  background: linear-gradient(#fafcff, #fff);
+  border: 1px solid #e4edf3;
+  border-radius: 10px;
+  overflow: visible;
+}
+.professional-report .pr-axis-label {
+  font-size: 11px;
+  fill: #647f98;
+}
+.professional-report .pr-point-label {
+  font-size: 12px;
+  font-weight: 700;
+  fill: var(--pr-ink);
+}
+.professional-report .pr-date-label {
+  font-size: 11px;
+  fill: #436582;
+}
+.professional-report .pr-measure-values {
+  display: flex;
+  gap: 8px 20px;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0;
+}
+.professional-report .pr-measure-values li {
+  display: flex;
+  gap: 7px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #536e86;
+}
+.professional-report .pr-measure-values strong {
+  color: #163c55;
+}
+
+/* Development focus: priorities as cards. */
+.professional-report .pr-priorities {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.professional-report .pr-priorities li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #f4f8f8;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--pr-ink);
+  min-width: 0;
+}
+.professional-report .pr-priority-icon {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--pr-tint-strong);
+  color: var(--pr-accent);
+  flex: none;
+}
+.professional-report .pr-next > p {
+  font-size: 12.5px;
+}
+.professional-report .pr-review-date {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  font-size: 11px;
+  color: #59738d;
+  margin-top: 14px;
+}
+.professional-report .pr-review-date svg {
+  color: #0e3c59;
+  flex: none;
+}
+.professional-report .pr-review-date strong {
+  display: block;
+  font-size: 12px;
+  color: #102f45;
+  margin-top: 2px;
+}
+
+/* Footer. */
+.professional-report .pr-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--pr-line);
+  margin-top: 26px;
+  padding: 14px 0 12px;
+  font-size: 10.5px;
+  color: #566b80;
+}
+.professional-report .pr-footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-width: 0;
+}
+.professional-report .pr-footer-ball {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--pr-tint-strong);
+  color: var(--pr-accent);
+  flex: none;
+}
+.professional-report .pr-footer strong {
+  display: block;
+  font-size: 12px;
+  color: #1c3f57;
+}
+.professional-report .pr-footer-brand span:not(.pr-footer-ball) {
+  display: block;
+  margin-top: 1px;
+}
+
+/* Inline (inside a parent's list) keeps the same cards without the header band. */
+.professional-report.pr-inline {
+  border: 0;
+  border-radius: 0;
+  background: #fff;
+}
+.professional-report.pr-inline .pr-academy-header {
+  display: none;
+}
+
+/* Narrow boxes (a phone, or the review column on a small laptop). */
+@container (max-width: 560px) {
+  .professional-report > section,
+  .professional-report > footer {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+  .professional-report .pr-academy-header {
+    padding: 14px 16px;
+  }
+  .professional-report .pr-activity-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .professional-report .pr-player-header {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+  .professional-report .pr-attendance-tile {
+    grid-column: 1 / -1;
+  }
+}
+@container (max-width: 400px) {
+  .professional-report .pr-academy-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .professional-report .pr-period {
+    text-align: left;
+  }
+  .professional-report .pr-player-photo,
+  .professional-report .pr-player-initials {
+    width: 60px;
+    height: 60px;
+    font-size: 20px;
+  }
+  .professional-report .pr-player-copy h2 {
+    font-size: 19px;
+  }
+  .professional-report .pr-priorities {
+    grid-template-columns: 1fr;
+  }
+  .professional-report .pr-point-label {
+    font-size: 11px;
+  }
+  .professional-report .pr-date-label {
+    font-size: 10px;
+  }
+  .professional-report .pr-footer {
+    display: grid;
+    gap: 6px;
+  }
+}
+@media print {
+  .development-report.professional-report {
+    border: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+  .professional-report .pr-record-details > summary {
+    display: none;
+  }
+  .professional-report .pr-record-details > p {
+    display: block;
+  }
+  .professional-report .pr-section,
+  .professional-report .pr-activity,
+  .professional-report .pr-priorities li,
+  .professional-report .pr-note-box,
+  .professional-report .pr-feedback-box {
+    break-inside: avoid;
+  }
+}

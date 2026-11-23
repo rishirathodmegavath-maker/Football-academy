@@ -1,0 +1,54 @@
+.guardian-announcements {
+  padding: 13px !important;
+}
+.guardian-announcements-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.guardian-announcements-heading .portal-round {
+  width: 30px;
+  height: 30px;
+}
+.guardian-announcements-heading h2 {
+  font-size: 13px;
+}
+.guardian-announcements ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 10px;
+}
+.guardian-announcements li {
+  border-left: 3px solid #fde68a;
+  padding-left: 10px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.guardian-announcements li[data-urgent="true"] {
+  border-left-color: #b91c1c;
+}
+.guardian-announcements li strong {
+  font-size: 12px;
+}
+.guardian-announcements li p {
+  font-size: 12px;
+  line-height: 1.55;
+  margin: 3px 0;
+  overflow-wrap: anywhere;
+}
+.guardian-announcements li small {
+  font-size: 10px;
+  color: #64748b;
+  line-height: 1.4;
+}
+.guardian-announcements-note {
+  font-size: 12px;
+  color: #b45309;
+}
+.guardian-message-body {
+  white-space: pre-wrap;
+}

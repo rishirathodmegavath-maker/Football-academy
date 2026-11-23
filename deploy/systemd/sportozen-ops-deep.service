@@ -1,0 +1,38 @@
+# /etc/systemd/system/sportozen-ops-deep.service   (WP8)
+# Weekly deep database check: PRAGMA quick_check and foreign_key_check, which
+# read the whole file (seconds on a small database; schedule it off-peak).
+# Reports through the same alert path as sportozen-ops-check.
+[Unit]
+Description=Sportozen Academy weekly deep database check
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=sportozen
+Group=sportozen
+WorkingDirectory=/srv/sportozen/current
+EnvironmentFile=/etc/sportozen/sportozen.env
+Environment=NODE_ENV=production
+ExecStart=/usr/bin/node scripts/ops-check.mjs --deep --alert
+# ops-check ends with 143 when systemd stops it (it releases its lock first): not a failure.
+SuccessExitStatus=143
+TimeoutStartSec=30min
+UMask=0077
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+LockPersonality=true
+CapabilityBoundingSet=
+AmbientCapabilities=
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6 AF_NETLINK
+RestrictNamespaces=true
+RestrictRealtime=true
+ProtectClock=true
+ProtectHostname=true
+ProtectProc=invisible
+SystemCallArchitectures=native
+ReadWritePaths=/var/lib/sportozen
+Nice=15
+IOSchedulingClass=idle

@@ -1,0 +1,22 @@
+# /etc/systemd/system/sportozen-backup.timer
+#
+# PROPOSED schedule, NOT APPROVED. The interval sets the recovery point
+# objective (RPO): hourly backups mean up to about one hour of changes can be
+# lost. The owner must approve the RPO (docs/BACKUP_AND_RECOVERY.md); then set
+# OnCalendar to match and SPORTOZEN_BACKUP_RPO_MINUTES in the environment file.
+#   hourly       -> RPO about 60 minutes (proposed)
+#   *:0/15       -> every 15 minutes
+#   daily        -> RPO about 24 hours
+[Unit]
+Description=Run the Sportozen Academy database backup on a schedule
+
+[Timer]
+OnCalendar=hourly
+# A few minutes of jitter keeps it from colliding with the top-of-hour work.
+RandomizedDelaySec=300
+# Catch up after the server was off.
+Persistent=true
+Unit=sportozen-backup.service
+
+[Install]
+WantedBy=timers.target

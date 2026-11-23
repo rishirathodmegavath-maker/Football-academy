@@ -1,0 +1,23 @@
+# /etc/fail2ban/jail.d/sportozen.local (WP7). Ban an address that is refused
+# 10 times in 10 minutes for an hour. nginx already limits the rate at the edge
+# (sportozen_auth zone); this removes persistent sources from the picture.
+# CAUTION: everyone behind one shared address (an academy's Wi-Fi) shares a ban;
+# raise maxretry if that proves to be a problem.
+[sportozen-auth]
+enabled  = true
+port     = http,https
+filter   = sportozen-auth
+logpath  = /var/log/nginx/access.log
+# Read the log file, not the journal (Debian's default backend is systemd).
+backend  = auto
+maxretry = 10
+findtime = 10m
+bantime  = 1h
+# Never ban the administrators' own range.
+ignoreip = 127.0.0.1/8 ::1 192.0.2.0/24
+
+[sshd]
+enabled  = true
+maxretry = 4
+findtime = 10m
+bantime  = 1h

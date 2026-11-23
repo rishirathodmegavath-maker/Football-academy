@@ -1,0 +1,182 @@
+{
+ "src/features/design-preview/approved-calendar.css": {
+  "hex": 100,
+  "offScale": 4,
+  "rawFont": 0
+ },
+ "src/features/design-preview/approved-homes.css": {
+  "hex": 91,
+  "offScale": 6,
+  "rawFont": 1
+ },
+ "src/features/design-preview/gallery-operations.css": {
+  "hex": 10,
+  "offScale": 2,
+  "rawFont": 0
+ },
+ "src/features/design-preview/gallery-parent-frame.css": {
+  "hex": 18,
+  "offScale": 0,
+  "rawFont": 0
+ },
+ "src/features/design-preview/gallery-plan.css": {
+  "hex": 31,
+  "offScale": 2,
+  "rawFont": 0
+ },
+ "src/features/design-preview/gallery-player.css": {
+  "hex": 62,
+  "offScale": 4,
+  "rawFont": 1
+ },
+ "src/features/design-preview/gallery-shell.css": {
+  "hex": 15,
+  "offScale": 2,
+  "rawFont": 0
+ },
+ "src/features/design-preview/gallery-workflows.css": {
+  "hex": 31,
+  "offScale": 2,
+  "rawFont": 0
+ },
+ "src/features/design-preview/home-dashboard.css": {
+  "hex": 114,
+  "offScale": 3,
+  "rawFont": 0
+ },
+ "src/features/design-preview/preview.css": {
+  "hex": 51,
+  "offScale": 2,
+  "rawFont": 4
+ },
+ "src/features/design-preview/prototype-gallery.css": {
+  "hex": 26,
+  "offScale": 1,
+  "rawFont": 1
+ },
+ "src/features/reports/professional-report.css": {
+  "hex": 40,
+  "offScale": 2,
+  "rawFont": 0
+ },
+ "src/features/workspaces/academy-approval.css": {
+  "hex": 10,
+  "offScale": 0,
+  "rawFont": 0
+ },
+ "src/features/workspaces/batch-announcements.css": {
+  "hex": 10,
+  "offScale": 1,
+  "rawFont": 0
+ },
+ "src/features/workspaces/communications.css": {
+  "hex": 30,
+  "offScale": 3,
+  "rawFont": 0
+ },
+ "src/features/workspaces/drill-library.css": {
+  "hex": 0,
+  "offScale": 2,
+  "rawFont": 0
+ },
+ "src/features/workspaces/guardian-announcements.css": {
+  "hex": 4,
+  "offScale": 0,
+  "rawFont": 0
+ },
+ "src/features/workspaces/portal-calendar.css": {
+  "hex": 132,
+  "offScale": 4,
+  "rawFont": 3
+ },
+ "src/features/workspaces/portal-fees.css": {
+  "hex": 69,
+  "offScale": 12,
+  "rawFont": 0
+ },
+ "src/features/workspaces/portal-field.css": {
+  "hex": 5,
+  "offScale": 0,
+  "rawFont": 0
+ },
+ "src/features/workspaces/portal-home.css": {
+  "hex": 52,
+  "offScale": 1,
+  "rawFont": 0
+ },
+ "src/features/workspaces/portal-loading.css": {
+  "hex": 3,
+  "offScale": 0,
+  "rawFont": 0
+ },
+ "src/features/workspaces/portal-parent-home.css": {
+  "hex": 18,
+  "offScale": 1,
+  "rawFont": 0
+ },
+ "src/features/workspaces/portal-players.css": {
+  "hex": 31,
+  "offScale": 2,
+  "rawFont": 0
+ },
+ "src/features/workspaces/portal-reports.css": {
+  "hex": 77,
+  "offScale": 3,
+  "rawFont": 0
+ },
+ "src/features/workspaces/portal-settings.css": {
+  "hex": 83,
+  "offScale": 6,
+  "rawFont": 2
+ },
+ "src/features/workspaces/portal-setup.css": {
+  "hex": 1,
+  "offScale": 0,
+  "rawFont": 0
+ },
+ "src/features/workspaces/portal-training.css": {
+  "hex": 112,
+  "offScale": 3,
+  "rawFont": 2
+ },
+ "src/features/workspaces/portal-trials.css": {
+  "hex": 3,
+  "offScale": 1,
+  "rawFont": 0
+ },
+ "src/features/workspaces/portal.css": {
+  "hex": 130,
+  "offScale": 4,
+  "rawFont": 0
+ },
+ "src/features/workspaces/report-review-workspace.css": {
+  "hex": 69,
+  "offScale": 3,
+  "rawFont": 0
+ },
+ "src/features/workspaces/secure.css": {
+  "hex": 51,
+  "offScale": 0,
+  "rawFont": 0
+ },
+ "src/features/workspaces/session-editor.css": {
+  "hex": 19,
+  "offScale": 1,
+  "rawFont": 0
+ },
+ "src/features/workspaces/session-extras.css": {
+  "hex": 45,
+  "offScale": 1,
+  "rawFont": 0
+ },
+ "src/features/workspaces/sign-in-split.css": {
+  "hex": 29,
+  "offScale": 3,
+  "rawFont": 0
+ },
+ "src/styles/globals.css": {
+  "hex": 267,
+  "offScale": 6,
+  "rawFont": 5
+ }
+}

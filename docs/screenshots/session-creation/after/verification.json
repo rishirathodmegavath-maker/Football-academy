@@ -1,0 +1,85 @@
+{
+  "verifiedAt": "2026-11-18T13:10:44.150Z",
+  "fictionalIsolatedAcademy": true,
+  "cases": [
+    "missing batch action returns to Quick Create",
+    "required field errors",
+    "duration validation",
+    "no activity/focus/venue draft",
+    "unassigned owner is not auto-selected",
+    "request failure retains inputs",
+    "lost response retries without duplicate session",
+    "duplicate clicks share one request key",
+    "confirmed save survives interrupted workspace refresh",
+    "actual saved-session navigation",
+    "refresh and real sign-in persistence",
+    "configured venue and custom focus/title",
+    "prefilled authorised coach",
+    "activities and partial shared plan after saving",
+    "Schedule and Start requirements",
+    "real coach and venue conflicts",
+    "valid simultaneous independent batches",
+    "parent/coach/anonymous/cross-academy guards",
+    "desktop and mobile overflow checks"
+  ],
+  "requestAttempts": 3,
+  "uniqueSubmissionKeys": 1,
+  "pageErrors": [],
+  "externalRequests": [],
+  "captures": [
+    {
+      "file": "missing-batch-1440.png",
+      "width": 1440,
+      "height": 1024,
+      "sha256": "ddc00fc447ae2a271e01acde5ca80c483643e2af2600b75c6431d79290e2a485"
+    },
+    {
+      "file": "failed-save-retained-320.png",
+      "width": 320,
+      "height": 844,
+      "sha256": "7a7e926276d88d96a629b8b88839be9edf7e5227c92d60190b09816a0cc624a7"
+    },
+    {
+      "file": "saved-session-1440.png",
+      "width": 1440,
+      "height": 1024,
+      "sha256": "e8fc6670a3e5e3e729aad98f2b12a41d448b7aca1e23ef277c83c61f7c044b0c"
+    },
+    {
+      "file": "saved-session-390.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "e18d6b7299c4772a45f8bb9fd95715bcdabdba44a57ff690b6e024eb4a499b45"
+    },
+    {
+      "file": "saved-session-320.png",
+      "width": 320,
+      "height": 844,
+      "sha256": "e521af24db5a82d57fc4ab134afc184f28d0f14e57cc600d96c96450bd2c072e"
+    },
+    {
+      "file": "configured-session-after-login-1440.png",
+      "width": 1440,
+      "height": 1024,
+      "sha256": "b8698a448224e51e055fd6fe57c531b53743f3b94704b2bc49e70dfc06c5699f"
+    },
+    {
+      "file": "create-session-1440.png",
+      "width": 1440,
+      "height": 1024,
+      "sha256": "7a511fc79472c0d4eacda97cabc8d51c0c7c81ee278f8ad5339ecb0ac3793a4d"
+    },
+    {
+      "file": "create-session-390.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "9cdd98a5d22d816ea8cde2e11d9ef81743e6c3263cc6f2ee7ed4664c307b8a77"
+    },
+    {
+      "file": "create-session-320.png",
+      "width": 320,
+      "height": 844,
+      "sha256": "7431f4b022cc83acd8a8f93fb03ab06f1f94839ee8fb5c927161ebb3463955e1"
+    }
+  ]
+}

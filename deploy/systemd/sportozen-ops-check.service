@@ -1,0 +1,42 @@
+# /etc/systemd/system/sportozen-ops-check.service   (WP8)
+# One pass of scripts/ops-check.mjs: application readiness, database, disk,
+# backup freshness, worker heartbeat, e-mail delivery, repeated sign-in
+# failures, latest deployment, certificate expiry. With --alert it sends an
+# alert for what is wrong (once, then hourly for critical and daily for
+# warnings) and one message when it clears. Run by sportozen-ops-check.timer.
+# Needs SPORTOZEN_ALERT_COMMAND and/or SPORTOZEN_ALERT_WEBHOOK_URL in the
+# environment file (docs/OPERATIONS.md); until one is set it only logs.
+[Unit]
+Description=Sportozen Academy operational check and alerts
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=sportozen
+Group=sportozen
+WorkingDirectory=/srv/sportozen/current
+EnvironmentFile=/etc/sportozen/sportozen.env
+Environment=NODE_ENV=production
+ExecStart=/usr/bin/node scripts/ops-check.mjs --alert
+# ops-check ends with 143 when systemd stops it (it releases its lock first): not a failure.
+SuccessExitStatus=143
+TimeoutStartSec=120
+UMask=0077
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+LockPersonality=true
+CapabilityBoundingSet=
+AmbientCapabilities=
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6 AF_NETLINK
+RestrictNamespaces=true
+RestrictRealtime=true
+ProtectClock=true
+ProtectHostname=true
+ProtectProc=invisible
+SystemCallArchitectures=native
+# The lock probe opens the database read-write; alert state is kept beside it.
+ReadWritePaths=/var/lib/sportozen
+Nice=10

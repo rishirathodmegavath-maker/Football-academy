@@ -1,0 +1,31 @@
+.portal-home-setup .portal-setup-intro {
+  margin: 0 0 10px;
+}
+.portal-setup-steps {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.portal-setup-steps li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+}
+.portal-setup-steps li > svg {
+  flex: none;
+}
+.portal-setup-steps li.done {
+  color: #475467;
+}
+.portal-setup-steps .portal-setup-state {
+  margin-left: auto;
+  font-size: 13px;
+  font-weight: 600;
+}
+.portal-setup-steps button {
+  min-height: 44px;
+  text-align: left;
+}

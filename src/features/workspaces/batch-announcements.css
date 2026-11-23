@@ -1,0 +1,114 @@
+.batch-announcement-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 110;
+}
+.batch-announcement-dialog {
+  position: fixed;
+  z-index: 111;
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%);
+  width: min(680px, calc(100vw - 24px));
+  max-height: calc(100dvh - 24px);
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  color: #0f172a;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.1);
+  font-family: inherit;
+  overflow: hidden;
+}
+.batch-announcement-dialog header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 22px;
+  border-bottom: 1px solid #e2e8f0;
+}
+.batch-announcement-dialog h2 {
+  font-size: 20px;
+  margin: 0 0 6px;
+}
+.batch-announcement-dialog h3 {
+  font-size: 16px;
+}
+.batch-announcement-dialog p {
+  font-size: 13px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.batch-announcement-scroll {
+  padding: 16px 22px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  min-height: 0;
+}
+.batch-announcement-dialog label {
+  display: grid;
+  gap: 7px;
+  font-size: 13px;
+  margin: 12px 0;
+}
+.batch-announcement-dialog .check-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.batch-announcement-dialog input,
+.batch-announcement-dialog select,
+.batch-announcement-dialog textarea {
+  min-width: 0;
+  max-width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+  padding: 10px;
+  background: white;
+  color: inherit;
+  font: inherit;
+}
+.batch-announcement-dialog footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 14px 22px;
+  border-top: 1px solid #e2e8f0;
+  background: #fff;
+  flex-shrink: 0;
+}
+.batch-announcement-dialog button:focus-visible {
+  outline: 3px solid #15803d;
+  outline-offset: 2px;
+}
+@media (max-width: 600px) {
+  .batch-announcement-dialog header,
+  .batch-announcement-dialog footer,
+  .batch-announcement-scroll {
+    padding: 12px;
+  }
+  .batch-announcement-dialog footer .button {
+    flex: 1 1 140px;
+  }
+  .batch-announcement-dialog p {
+    font-size: 12px;
+  }
+}
+.batch-announcement-feedback {
+  padding: 8px 22px 0;
+  border-top: 1px solid #e2e8f0;
+}
+.batch-announcement-feedback:empty {
+  display: none;
+}
+.batch-announcement-feedback p {
+  margin: 0 0 6px;
+}
+.batch-announcement-feedback p[role="alert"] {
+  color: #b91c1c;
+  font-weight: 600;
+}

@@ -1,0 +1,115 @@
+# /etc/nginx/conf.d/sportozen.conf   (nginx 1.25.1 or newer)
+#
+# Template. Replace __DOMAIN__ with the owner-approved domain (OWNER DECISION):
+#   sed 's/__DOMAIN__/academy.example.org/g' sportozen.conf.template | sudo tee /etc/nginx/conf.d/sportozen.conf
+# Install deploy/nginx/sportozen-proxy.conf as /etc/nginx/snippets/sportozen-proxy.conf
+# first. Obtain the certificate (see docs/DEPLOYMENT.md) before enabling the
+# HTTPS server, then `nginx -t && systemctl reload nginx`.
+#
+# What this file guarantees to the application:
+#   * the only public entry is this proxy; the app listens on 127.0.0.1:3000;
+#   * X-Forwarded-For is OVERWRITTEN with the TCP peer address, never appended,
+#     so a client cannot forge the address used by Better Auth's IP limiter;
+#   * requests for any other host name are dropped;
+#   * sign-in/sign-up, the WhatsApp webhook and general API traffic have edge
+#     request limits per client address;
+#   * internal probes are reachable only from the server itself.
+
+# Access log with the request id and timings. It deliberately has NO query
+# string (reset, verification and invitation links carry one-time tokens there)
+# and no referrer: $uri is the path only. deploy/host/fail2ban matches it.
+# If /etc/nginx/nginx.conf also defines an access_log, remove one of them.
+# A player or guardian invitation address is /join/<single-use token>: the token part is replaced before it is written.
+map $uri $sportozen_log_uri {
+    default         $uri;
+    ~^/join/        "/join/[token]";
+}
+log_format sportozen '$remote_addr - $remote_user [$time_local] '
+                     '"$request_method $sportozen_log_uri $server_protocol" '
+                     '$status $body_bytes_sent "-" "$http_user_agent" '
+                     'rid=$request_id rt=$request_time urt=$upstream_response_time';
+access_log /var/log/nginx/access.log sportozen;
+
+limit_req_zone $binary_remote_addr zone=sportozen_auth:10m rate=20r/m;
+limit_req_zone $binary_remote_addr zone=sportozen_webhook:10m rate=120r/m;
+limit_req_zone $binary_remote_addr zone=sportozen_general:10m rate=600r/m;
+limit_conn_zone $binary_remote_addr zone=sportozen_conn:10m;
+
+# Unknown host names (including direct-IP requests): close without answering.
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    server_name _;
+    return 444;
+}
+server {
+    listen 443 ssl default_server;
+    listen [::]:443 ssl default_server;
+    server_name _;
+    ssl_reject_handshake on;
+}
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name __DOMAIN__;
+    server_tokens off;
+    location /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+    }
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
+
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    http2 on;
+    server_name __DOMAIN__;
+    server_tokens off;
+
+    ssl_certificate     /etc/letsencrypt/live/__DOMAIN__/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/__DOMAIN__/privkey.pem;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_prefer_server_ciphers off;
+    ssl_session_cache shared:SSL:10m;
+    ssl_session_timeout 1d;
+    ssl_session_tickets off;
+    ssl_stapling on;
+    ssl_stapling_verify on;
+    resolver 1.1.1.1 9.9.9.9 valid=300s;
+
+    # The application caps JSON at 1 MB; this is the outer bound.
+    client_max_body_size 2m;
+    client_body_timeout 15s;
+    client_header_timeout 15s;
+    send_timeout 60s;
+    limit_conn sportozen_conn 40;
+    limit_req_status 429;
+    limit_conn_status 429;
+
+    # Probes: liveness may be public (for an external uptime monitor);
+    # readiness is for this server only.
+    location = /api/ready {
+        allow 127.0.0.1;
+        allow ::1;
+        deny all;
+        include /etc/nginx/snippets/sportozen-proxy.conf;
+    }
+    # Better Auth endpoints (sign-in, sign-up, verify, reset).
+    location /api/auth/ {
+        limit_req zone=sportozen_auth burst=10 nodelay;
+        include /etc/nginx/snippets/sportozen-proxy.conf;
+    }
+    # Meta webhooks: signature-checked by the application, limited here.
+    location /api/whatsapp/ {
+        limit_req zone=sportozen_webhook burst=60 nodelay;
+        client_max_body_size 1m;
+        include /etc/nginx/snippets/sportozen-proxy.conf;
+    }
+    location / {
+        limit_req zone=sportozen_general burst=100 nodelay;
+        include /etc/nginx/snippets/sportozen-proxy.conf;
+    }
+}

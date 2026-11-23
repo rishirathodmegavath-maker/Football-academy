@@ -1,0 +1,31 @@
+/* An error that belongs to one field: it sits under the field, names what to do, and is linked to it with aria-describedby. */
+.portal-field-error {
+  display: block;
+  margin-top: 4px;
+  color: #b42318;
+  font-size: 13px;
+  font-weight: 600;
+}
+/* The forms open in a dialog rendered outside .academy-portal, so the rule is scoped to the form grid itself. */
+.portal-form-grid input[aria-invalid="true"],
+.portal-form-grid select[aria-invalid="true"] {
+  border-color: #b42318;
+  box-shadow: 0 0 0 1px #b42318;
+}
+
+/* Player link: the player's own details page, and a tick box with its message. */
+.portal-self-details { max-width: 560px; margin: 24px auto; padding: 0 16px; }
+.portal-self-details h1 { margin: 0 0 8px; }
+.portal-check { display: grid; grid-template-columns: auto 1fr; gap: 8px; align-items: start; }
+.portal-check .portal-field-error { grid-column: 1 / -1; }
+.portal-form-grid input[type="checkbox"][aria-invalid="true"] { outline: 2px solid #b42318; outline-offset: 1px; }
+/* Players waiting for the academy's confirmation (owner and admin). */
+.portal-approvals { padding: 16px 20px; margin-bottom: 16px; }
+.portal-approvals h2 { margin: 0 0 6px; font-size: 18px; }
+.portal-approvals ul { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 12px; }
+.portal-approvals li { display: grid; gap: 8px; padding: 12px 0; border-top: 1px solid #e4e7ec; }
+.portal-approvals .portal-check { margin: 0; }
+.portal-approvals .portal-duplicates { border: 1px solid var(--amber); background: color-mix(in srgb, var(--amber) 8%, white); border-radius: 8px; padding: 10px 12px; display: grid; gap: 8px; }
+.portal-approvals .portal-duplicates p { margin: 0; }
+.portal-approvals .portal-duplicates ul { margin: 0; gap: 4px; }
+.portal-approvals .portal-duplicates li { border-top: 0; padding: 0; }

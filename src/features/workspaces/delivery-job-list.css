@@ -1,0 +1,31 @@
+.delivery-jobs {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+.delivery-jobs-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.delivery-jobs-filters label {
+  display: grid;
+  gap: 4px;
+  font-size: 12px;
+  min-width: 0;
+  flex: 1 1 160px;
+}
+.delivery-jobs-filters select,
+.delivery-jobs-filters input {
+  min-height: 40px;
+  min-width: 0;
+}
+.delivery-jobs-note {
+  font-size: 12px;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.delivery-jobs .list-row > div {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}

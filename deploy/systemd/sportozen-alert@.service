@@ -1,0 +1,30 @@
+# /etc/systemd/system/sportozen-alert@.service   (WP8)
+# Started by OnFailure= of the web, worker and backup units: when one of them
+# enters the failed state (a crash loop that exhausted its restart limit, a
+# backup that exited with an error) this sends one critical alert naming the
+# unit, through the destinations configured for ops-check. %i is the failed
+# unit's name.
+[Unit]
+Description=Alert that %i failed
+
+[Service]
+Type=oneshot
+User=sportozen
+Group=sportozen
+WorkingDirectory=/srv/sportozen/current
+EnvironmentFile=/etc/sportozen/sportozen.env
+ExecStart=/usr/bin/node scripts/ops-alert.mjs --unit %i
+TimeoutStartSec=45
+UMask=0077
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+LockPersonality=true
+CapabilityBoundingSet=
+AmbientCapabilities=
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6 AF_NETLINK
+RestrictNamespaces=true
+RestrictRealtime=true
+SystemCallArchitectures=native

@@ -1,0 +1,57 @@
+# /etc/systemd/system/sportozen-worker.service
+# Background delivery queue (e-mail now, WhatsApp when enabled). It opens the
+# SAME database file as the web application, on the same server.
+# Enable only when e-mail delivery or messaging has been approved and configured:
+#   systemctl enable --now sportozen-worker
+[Unit]
+Description=Sportozen Academy background worker
+# Start after the web service so the first start applies any schema migration
+# once, in one process.
+After=sportozen-web.service
+Wants=sportozen-web.service
+
+# WP8: tell the operator when this unit fails (crash loop, failed backup).
+OnFailure=sportozen-alert@%n.service
+# Reaches the failed state (and so alerts) after 5 starts in 5 minutes.
+StartLimitIntervalSec=300
+StartLimitBurst=5
+
+[Service]
+Type=simple
+User=sportozen
+Group=sportozen
+WorkingDirectory=/srv/sportozen/current
+EnvironmentFile=/etc/sportozen/sportozen.env
+Environment=NODE_ENV=production
+ExecStart=/usr/bin/node --conditions=react-server --import tsx scripts/communication-worker.ts
+KillSignal=SIGTERM
+SuccessExitStatus=143
+TimeoutStopSec=30
+Restart=on-failure
+RestartSec=5
+UMask=0077
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+# Added by the WP7 hardening pass (not yet run under systemd: check with
+# `systemd-analyze security <unit>` on the first deployment).
+CapabilityBoundingSet=
+AmbientCapabilities=
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6 AF_NETLINK
+RestrictNamespaces=true
+RestrictRealtime=true
+ProtectClock=true
+ProtectHostname=true
+ProtectProc=invisible
+SystemCallArchitectures=native
+ReadWritePaths=/var/lib/sportozen
+
+[Install]
+WantedBy=multi-user.target

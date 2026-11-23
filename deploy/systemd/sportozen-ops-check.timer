@@ -1,0 +1,14 @@
+# /etc/systemd/system/sportozen-ops-check.timer   (WP8)
+# Every minute: a server that is down is reported within about two minutes.
+# This is the interval, not an owner-approved target; the detection time
+# objective is part of the monitoring decision (docs/OPERATIONS.md).
+[Unit]
+Description=Run the Sportozen Academy operational check every minute
+
+[Timer]
+OnCalendar=minutely
+AccuracySec=10s
+Unit=sportozen-ops-check.service
+
+[Install]
+WantedBy=timers.target

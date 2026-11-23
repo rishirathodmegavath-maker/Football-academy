@@ -1,0 +1,62 @@
+# /etc/systemd/system/sportozen-web.service
+# Layout: /srv/sportozen/current -> releases/<id>, data in /var/lib/sportozen,
+# configuration in /etc/sportozen/sportozen.env. Adjust paths in one place only.
+[Unit]
+Description=Sportozen Academy web application
+After=network-online.target
+Wants=network-online.target
+
+# WP8: tell the operator when this unit fails (crash loop, failed backup).
+OnFailure=sportozen-alert@%n.service
+StartLimitIntervalSec=300
+StartLimitBurst=5
+
+[Service]
+Type=simple
+User=sportozen
+Group=sportozen
+WorkingDirectory=/srv/sportozen/current
+EnvironmentFile=/etc/sportozen/sportozen.env
+Environment=NODE_ENV=production
+# Refuse to start on unsafe configuration (placeholder domain, short secret,
+# database inside the release directory, QA flags, ...). Prints no secrets.
+ExecStartPre=/usr/bin/node scripts/preflight.mjs --artifact
+# Loopback only: the reverse proxy is the single public entry point.
+ExecStart=/usr/bin/node node_modules/next/dist/bin/next start --hostname 127.0.0.1 --port 3000
+# SIGTERM lets the process fold the SQLite write-ahead log into the database
+# file and exit; the grace period covers in-flight requests and PDF exports.
+KillSignal=SIGTERM
+# Next.js exits with 143 (128+SIGTERM) on a normal stop; that is success, not a failure to alert on.
+SuccessExitStatus=143
+TimeoutStopSec=30
+Restart=on-failure
+RestartSec=3
+# Files created by the service are private to it (database, WAL, backups).
+UMask=0077
+# Sandboxing.
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+# Added by the WP7 hardening pass (not yet run under systemd: check with
+# `systemd-analyze security <unit>` on the first deployment).
+CapabilityBoundingSet=
+AmbientCapabilities=
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6 AF_NETLINK
+RestrictNamespaces=true
+RestrictRealtime=true
+ProtectClock=true
+ProtectHostname=true
+ProtectProc=invisible
+SystemCallArchitectures=native
+ReadWritePaths=/var/lib/sportozen
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target

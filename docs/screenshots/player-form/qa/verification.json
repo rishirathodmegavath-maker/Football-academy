@@ -1,0 +1,17 @@
+{
+  "fictional": true,
+  "isolatedDatabase": true,
+  "initialPlayers": 60,
+  "finalPlayers": 62,
+  "viewports": [
+    1536,
+    1440,
+    390,
+    320
+  ],
+  "requiredCases": 14,
+  "pageErrors": [],
+  "externalRequests": [],
+  "preservedHistoricalSession": "531fe36e-3fda-4e05-8eb6-78ac9f7aa160",
+  "status": "PASS"
+}

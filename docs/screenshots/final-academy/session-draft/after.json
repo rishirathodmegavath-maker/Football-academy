@@ -1,0 +1,16 @@
+{
+  "minimumDraft": "PASS",
+  "requiredFields": "PASS",
+  "optionalAgenda": "PASS",
+  "durationValidation": "PASS; end time is derived from a positive bounded duration",
+  "networkRetention": "PASS",
+  "repeatedClickCount": 1,
+  "refreshAndLogin": "PASS",
+  "sameIdEdit": "PASS",
+  "savedStatus": "DRAFT",
+  "syntheticAcademyId": "54da6a60-abbb-40ca-9100-59352ab93448",
+  "sessionId": "df4d60c0-9caf-45cf-bd54-da014e108b56",
+  "mapsManualFallback": "PASS; real provider configuration blocked, no external request",
+  "mapsUiWithFakeTransport": "PASS; no results, outage, selected place and shared session token; fake place never persisted",
+  "pageErrors": []
+}
