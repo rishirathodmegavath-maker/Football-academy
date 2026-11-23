@@ -316,6 +316,40 @@ function ReviewWorkspace({
         ),
     )
     .map((player) => player.id);
+  // Choosing a batch makes a separate monthly draft for each of its players who has none for the month, once for each batch,
+  // month and set of missing players, without a press. The server never overwrites an existing report (it returns it
+  // unchanged), nothing is approved here, and each player's report is still reviewed and approved on its own.
+  const missingIds = batch
+    ? batchPlayers
+        .filter(
+          (player) =>
+            !reports.some(
+              (item) => item.playerId === player.id && monthFor(item) === month,
+            ),
+        )
+        .map((player) => player.id)
+    : [];
+  const autoPrepared = useRef("");
+  useEffect(() => {
+    if (!batch || !missingIds.length || w.busy) return;
+    const key = `${batch.id}|${month}|${missingIds.join(",")}`;
+    if (autoPrepared.current === key) return;
+    autoPrepared.current = key;
+    void w
+      .period<WorkspaceReport[]>({
+        requestId: crypto.randomUUID(),
+        action: "monthlyPrepare",
+        data: { playerIds: missingIds, month },
+      })
+      .then((result) =>
+        setNotice(
+          result
+            ? `${result.length} monthly draft${result.length === 1 ? "" : "s"} created automatically for ${batch.name}. Each player has their own report: open one to review and approve it.`
+            : "Drafts could not be created automatically. Use Prepare batch drafts to try again.",
+        ),
+      );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [batch?.id, month, missingIds.join(","), w.busy]);
   const selection = (
     <section className="rr-card rr-selection" aria-labelledby="rr-select-title">
       <h2 id="rr-select-title">
@@ -391,6 +425,12 @@ function ReviewWorkspace({
           Prepare batch drafts
         </button>
       </div>
+      {batch && (
+        <p className="muted" role="note">
+          All {batchPlayers.length} player{batchPlayers.length === 1 ? "" : "s"} in {batch.name} are included. A separate draft is
+          created for each automatically; review and approve them one by one from the batch review queue below.
+        </p>
+      )}
       <details
         className="rr-queue"
         open={queueOpen}
