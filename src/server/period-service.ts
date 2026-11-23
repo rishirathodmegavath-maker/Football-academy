@@ -23,6 +23,7 @@ import {
 import { authorisedSession } from "./training-service";
 import { monthlySourceData } from "./monthly-source-data";
 import { approvedReportPresentationData } from "@/services/reports/report-presentation";
+import { writeMonthlyFromSources } from "@/services/reports/auto-monthly";
 import { atomic, database, audit } from "./database";
 import { WorkspaceError } from "./auth";
 function fail(message: string): never {
@@ -535,6 +536,8 @@ export function periodAction(ctx: WorkspaceAccess, input: unknown) {
             playerIds: z.array(z.string()).min(1),
             month: z.string().regex(/^\d{4}-\d{2}$/),
             correctionOf: z.string().optional(),
+            // One-click batch report: the words are written from the records (services/reports/auto-monthly) for the coach to edit.
+            autoWrite: z.boolean().optional(),
           })
           .parse(command.data);
         result = [...new Set(d.playerIds)].map((playerId) => {
@@ -560,6 +563,13 @@ export function periodAction(ctx: WorkspaceAccess, input: unknown) {
           );
           if (existing) return existing; // Approved historical months never overwritten by regeneration.
           const sources = assembleMonthly(ctx, playerId, d.month);
+          const written = d.autoWrite
+            ? writeMonthlyFromSources({
+                playerName: requirePlayer(ctx, playerId).name,
+                sources,
+                planNextStep: plan?.nextStep,
+              })
+            : undefined;
           const r: WorkspaceReport = {
             id: randomUUID(),
             academyId: ctx.academy.id,
@@ -571,12 +581,12 @@ export function periodAction(ctx: WorkspaceAccess, input: unknown) {
             correctionOf: d.correctionOf,
             monthlySources: sources,
             sourceEvidenceIds: sources.evidenceIds,
-            observation: "",
+            observation: written?.observation ?? "",
             evidenceType: sources.evidenceIds.length
               ? "COACH_OBSERVATION"
               : "MISSING_OR_UNCLEAR",
-            nextStep: plan?.nextStep ?? "",
-            closingNote: "",
+            nextStep: written?.nextStep ?? plan?.nextStep ?? "",
+            closingNote: written?.closingNote ?? "",
             status: "Draft",
             externalDeliveryStatus: "NOT_SENT",
           };

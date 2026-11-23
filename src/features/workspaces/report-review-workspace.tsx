@@ -287,7 +287,7 @@ function ReviewWorkspace({
     const result = await w.period<WorkspaceReport[]>({
       requestId: crypto.randomUUID(),
       action: "monthlyPrepare",
-      data: { playerIds: ids, month },
+      data: { playerIds: ids, month, autoWrite: true },
     });
     setNotice(
       result
@@ -339,12 +339,12 @@ function ReviewWorkspace({
       .period<WorkspaceReport[]>({
         requestId: crypto.randomUUID(),
         action: "monthlyPrepare",
-        data: { playerIds: missingIds, month },
+        data: { playerIds: missingIds, month, autoWrite: true },
       })
       .then((result) =>
         setNotice(
           result
-            ? `${result.length} monthly draft${result.length === 1 ? "" : "s"} created automatically for ${batch.name}. Each player has their own report: open one to review and approve it.`
+            ? `${result.length} monthly draft${result.length === 1 ? "" : "s"} written automatically from the records for ${batch.name}. Each player has their own report: read or edit it, then approve.`
             : "Drafts could not be created automatically. Use Prepare batch drafts to try again.",
         ),
       );
@@ -474,8 +474,9 @@ function ReviewWorkspace({
       </div>
       {batch && (
         <p className="muted" role="note">
-          All {batchPlayers.length} player{batchPlayers.length === 1 ? "" : "s"} in {batch.name} are included. A separate draft is
-          created for each automatically; review and approve them one by one from the batch review queue below.
+          All {batchPlayers.length} player{batchPlayers.length === 1 ? "" : "s"} in {batch.name} are included. A separate report is
+          written for each automatically from the records (attendance, activities, focus and reviewed observations). Nothing is
+          invented or scored. Read or edit any report, then approve them together or one by one.
         </p>
       )}
       {batch && batchReports.length > 0 && (
