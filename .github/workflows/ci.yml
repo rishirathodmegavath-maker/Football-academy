@@ -22,7 +22,7 @@ jobs:
       SPORTOZEN_WHATSAPP_LIVE_ENABLED: "false"
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
         with:
           version: 11.19.0
       - uses: actions/setup-node@v4
@@ -61,7 +61,7 @@ jobs:
       SPORTOZEN_WHATSAPP_LIVE_ENABLED: "false"
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
         with:
           version: 11.19.0
       - uses: actions/setup-node@v4
@@ -101,7 +101,7 @@ jobs:
       SPORTOZEN_WHATSAPP_LIVE_ENABLED: "false"
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
         with:
           version: 11.19.0
       - uses: actions/setup-node@v4
